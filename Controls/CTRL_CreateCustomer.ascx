@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CreateCustomer.ascx.cs" Inherits="NBE.Controls.CreateCustomer" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CTRL_CreateCustomer.ascx.cs" Inherits="NBE.Controls.CreateCustomer" %>
     <link href ="bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src ="bootstrap-5.3.8-dist/js/bootsrap.bundle.min.js"></script>
 <style type="text/css">

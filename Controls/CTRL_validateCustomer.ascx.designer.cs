@@ -7,20 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NBE
+namespace NBE.Controls
 {
 
 
-    public partial class customer
+    public partial class CTRL_validateCustomer
     {
 
         /// <summary>
-        /// CTRL_CreateCustomer1 control.
+        /// lit_err control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NBE.Controls.CreateCustomer CTRL_CreateCustomer1;
+        protected global::System.Web.UI.WebControls.Literal lit_err;
+
+        /// <summary>
+        /// gv_CustomerRequests control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gv_CustomerRequests;
     }
 }

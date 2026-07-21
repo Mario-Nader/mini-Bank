@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="bootstrap-5.3.8-dist\css\bootstrap-grid.css" />
     <Content Include="bootstrap-5.3.8-dist\css\bootstrap-grid.min.css" />
     <Content Include="bootstrap-5.3.8-dist\css\bootstrap-grid.rtl.css" />
@@ -89,7 +90,8 @@
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.esm.min.js" />
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.js" />
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.min.js" />
-    <Content Include="Controls\CreateCustomer.ascx" />
+    <Content Include="Controls\CTRL_CreateCustomer.ascx" />
+    <Content Include="Controls\CTRL_validateCustomer.ascx" />
     <Content Include="makeCustomer.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="mainSite.Master" />
@@ -121,16 +123,24 @@
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
     <Content Include="src\images\NBELogo.jpeg" />
+    <Content Include="validateCustomer.aspx" />
     <Content Include="Web.config" />
     <Content Include="WebForm1.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\CreateCustomer.ascx.cs">
-      <DependentUpon>CreateCustomer.ascx</DependentUpon>
+    <Compile Include="Controls\CTRL_CreateCustomer.ascx.cs">
+      <DependentUpon>CTRL_CreateCustomer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controls\CreateCustomer.ascx.designer.cs">
-      <DependentUpon>CreateCustomer.ascx</DependentUpon>
+    <Compile Include="Controls\CTRL_CreateCustomer.ascx.designer.cs">
+      <DependentUpon>CTRL_CreateCustomer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CTRL_validateCustomer.ascx.cs">
+      <DependentUpon>CTRL_validateCustomer.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CTRL_validateCustomer.ascx.designer.cs">
+      <DependentUpon>CTRL_validateCustomer.ascx</DependentUpon>
     </Compile>
     <Compile Include="makeCustomer.aspx.cs">
       <DependentUpon>makeCustomer.aspx</DependentUpon>
@@ -154,6 +164,13 @@
       <DependentUpon>mainSite.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="validateCustomer.aspx.cs">
+      <DependentUpon>validateCustomer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="validateCustomer.aspx.designer.cs">
+      <DependentUpon>validateCustomer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
