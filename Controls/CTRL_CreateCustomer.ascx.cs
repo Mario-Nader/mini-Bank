@@ -75,7 +75,7 @@ namespace NBE.Controls
                                 }
                                 reader.Close();
                             } while (repeatedCIF);
-                            String InsertCustomerStatment = "insert into Customers (Name, CIF, address, email, age, gender,MakerID,CheckerID,status,nationalID,MakerName) values (@username, @CIF, @address,@email,@age,@gender,@makerID,@checkerID,0,@nationalID,@makerName)";
+                            String InsertCustomerStatment = "insert into Customers (Name, CIF, address, email, age, gender,MakerID,status,nationalID,MakerName) values (@username, @CIF, @address,@email,@age,@gender,@makerID,0,@nationalID,@makerName)";
 
                             SqlCommand InserCustomerCmd = new SqlCommand(InsertCustomerStatment, DBconnection);
                             InserCustomerCmd.Parameters.AddWithValue("@username", txt_name.Text);
@@ -85,7 +85,6 @@ namespace NBE.Controls
                             InserCustomerCmd.Parameters.AddWithValue("@age", Convert.ToInt32(txt_age.Text));
                             InserCustomerCmd.Parameters.AddWithValue("@gender", Convert.ToChar(RadioButtonList1.SelectedValue));
                             InserCustomerCmd.Parameters.AddWithValue("@makerID", Session["ID"]);
-                            InserCustomerCmd.Parameters.AddWithValue("@checkerID", 2);
                             InserCustomerCmd.Parameters.AddWithValue("@nationalID", txt_nationalD.Text);
                             InserCustomerCmd.Parameters.AddWithValue("@makerName", Session["uname"]);
                             int rowsAffected = InserCustomerCmd.ExecuteNonQuery();

@@ -13,23 +13,23 @@ namespace NBE
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            int role = Convert.ToInt32(Session["role"]);
-            if (role == 3)
-            {
-                Response.Redirect("Home.aspx");
-            }
-            else if (role == 2)
-            {
-                Response.Redirect("makeCustomer.aspx");
-            }
-            else if (role == 3)
-            {
-                //we will redirect the checker 
-                Console.WriteLine("hello checker");
-            }
+
             if (!Page.IsPostBack)
             {
-               
+                int role = Convert.ToInt32(Session["role"]);
+                if (role == 3)
+                {
+                    Response.Redirect("Home.aspx");
+                }
+                else if (role == 2)
+                {
+                    Response.Redirect("makeCustomer.aspx");
+                }
+                else if (role == 1)
+                {
+                    //we will redirect the checker 
+                    Response.Redirect("ValidateCustomer.aspx");
+                }
             }
         }
 
@@ -61,26 +61,27 @@ namespace NBE
                     if (reader.HasRows)
                     {
                         DBliteral.Text = "logged in successfully";
-                        DBliteral.Text = role.ToString();
                         Session.Add("uname", txt_username.Text);
                         Session.Add("ID", Convert.ToInt32(reader["ID"]));
                         Session.Add("Role", role);
+                        reader.Close();
                         if (role == 3)
                         {
                             Response.Redirect("Home.aspx");
                         }else if(role == 2)
                         {
                             Response.Redirect("makeCustomer.aspx");
-                        }else if(role == 3)
+                        }else if(role == 1)
                         {
                             //we will redirect the checker 
-                            Console.WriteLine("hello checker");
+                            Response.Redirect("ValidateCustomer.aspx");
                         }
                     }
                     else
                     {
                         DBliteral.Text = "invalid username or password";
                     }
+
                 }
                 catch (Exception ex)
                 {

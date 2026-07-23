@@ -1,3 +1,5 @@
+H:\NBEIntern\NBE\obj\Debug\NBE.csproj.AssemblyReference.cache
+H:\NBEIntern\NBE\obj\Debug\NBE.csproj.CoreCompileInputs.cache
 H:\NBEIntern\NBE\bin\NBE.dll.config
 H:\NBEIntern\NBE\bin\NBE.dll
 H:\NBEIntern\NBE\bin\NBE.pdb
@@ -52,8 +54,6 @@ H:\NBEIntern\NBE\bin\roslyn\VBCSCompiler.exe
 H:\NBEIntern\NBE\bin\roslyn\VBCSCompiler.exe.config
 H:\NBEIntern\NBE\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 H:\NBEIntern\NBE\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-H:\NBEIntern\NBE\obj\Debug\NBE.csproj.AssemblyReference.cache
-H:\NBEIntern\NBE\obj\Debug\NBE.csproj.CoreCompileInputs.cache
 H:\NBEIntern\NBE\obj\Debug\NBE.csproj.Up2Date
 H:\NBEIntern\NBE\obj\Debug\NBE.dll
 H:\NBEIntern\NBE\obj\Debug\NBE.pdb

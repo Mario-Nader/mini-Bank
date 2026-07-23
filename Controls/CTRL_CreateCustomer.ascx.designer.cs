@@ -141,15 +141,6 @@ namespace NBE.Controls
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
 
         /// <summary>
-        /// rangV_nationalID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RangeValidator rangV_nationalID;
-
-        /// <summary>
         /// RadioButtonList1 control.
         /// </summary>
         /// <remarks>

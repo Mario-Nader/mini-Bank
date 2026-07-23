@@ -85,7 +85,6 @@
         </td>
         <td>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txt_nationalD" Display="Dynamic" ErrorMessage="please enter your national ID"></asp:RequiredFieldValidator>
-            <asp:RangeValidator ID="rangV_nationalID" runat="server" ControlToValidate="txt_nationalD" Display="Dynamic" ErrorMessage="please enter a valid national ID" MinimumValue="10000000000000" Type="Integer"></asp:RangeValidator>
         </td>
     </tr>
     <tr>
