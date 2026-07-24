@@ -105,7 +105,7 @@
         <td class="auto-style2">&nbsp;</td>
         <td class="auto-style3">
             <asp:Button ID="Submit" runat="server" OnClick="submit_button_clicked" Text="Submit" CssClass="btn btn-primary" />
-            <asp:Button ID="clear" runat="server" CausesValidation="False" OnClick="clear_button_clicked" Text="Clear" UseSubmitBehavior="False" />
+            <asp:Button ID="clear" runat="server" CausesValidation="False" CssClass="btn btn-secondary" OnClick="clear_button_clicked" Text="Clear" UseSubmitBehavior="False" />
         </td>
         <td>
             <asp:Literal ID="lit_status" runat="server"></asp:Literal>

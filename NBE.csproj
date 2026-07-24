@@ -90,8 +90,10 @@
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.esm.min.js" />
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.js" />
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.min.js" />
+    <Content Include="Controls\ChangePassword.ascx" />
     <Content Include="Controls\CTRL_CreateCustomer.ascx" />
     <Content Include="Controls\CTRL_validateCustomer.ascx" />
+    <Content Include="CustomerChangePassword.aspx" />
     <Content Include="makeCustomer.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="mainSite.Master" />
@@ -128,6 +130,13 @@
     <Content Include="WebForm1.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ChangePassword.ascx.cs">
+      <DependentUpon>ChangePassword.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ChangePassword.ascx.designer.cs">
+      <DependentUpon>ChangePassword.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CTRL_CreateCustomer.ascx.cs">
       <DependentUpon>CTRL_CreateCustomer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -141,6 +150,13 @@
     </Compile>
     <Compile Include="Controls\CTRL_validateCustomer.ascx.designer.cs">
       <DependentUpon>CTRL_validateCustomer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerChangePassword.aspx.cs">
+      <DependentUpon>CustomerChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerChangePassword.aspx.designer.cs">
+      <DependentUpon>CustomerChangePassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="makeCustomer.aspx.cs">
       <DependentUpon>makeCustomer.aspx</DependentUpon>

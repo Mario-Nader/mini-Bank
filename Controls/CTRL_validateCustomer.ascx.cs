@@ -140,7 +140,7 @@ namespace NBE.Controls
                             int role;
                             bool active;
                             Name = cust["Name"].ToString();
-                            Password = "";
+                            Password = "NBE@" + cust["nationalID"];//must add encryption
                             role = 3;
                             active = false;
                             cust.Close();

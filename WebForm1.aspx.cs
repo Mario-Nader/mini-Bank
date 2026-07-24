@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using System.Web.Configuration;
+using System.ComponentModel.Design;
 
 namespace NBE
 {
@@ -48,14 +49,18 @@ namespace NBE
             using (SqlConnection DBconnection = new SqlConnection(connectionFromConfiguration))
             {
                     DBconnection.Open();
-                    String loginQuery = "select Name, Role,ID from USERS where name = @username and password = @password";
+                    String loginQuery = "select Name, Role,ID ,active from USERS where name = @username and password = @password";
                     SqlCommand loginCommand = new SqlCommand(loginQuery, DBconnection);
                     loginCommand.Parameters.AddWithValue("@username", txt_username.Text);//use CIF instead of the username
                     loginCommand.Parameters.AddWithValue("@password",txt_pwd.Text);
                     //DBliteral.Text = connectionFromConfiguration.ToString();
                     SqlDataReader reader = loginCommand.ExecuteReader();
-                        reader.Read();
-                        int role = Convert.ToInt32(reader["role"]);
+                int role = 0;
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    role = Convert.ToInt32(reader["role"]);
+                }
                 try
                 {
                     if (reader.HasRows)
@@ -64,11 +69,22 @@ namespace NBE
                         Session.Add("uname", txt_username.Text);
                         Session.Add("ID", Convert.ToInt32(reader["ID"]));
                         Session.Add("Role", role);
+                        bool active = Convert.ToBoolean(reader["active"]);
+                        Session.Add("active",Convert.ToBoolean(reader["active"]));
+                        int id = Convert.ToInt32(reader["ID"]);
                         reader.Close();
                         if (role == 3)
                         {
-                            Response.Redirect("Home.aspx");
-                        }else if(role == 2)
+                            if (!Convert.ToBoolean(Session["active"]))
+                            {
+                                Response.Redirect("CustomerChangePassword.aspx");
+                            }
+                            else
+                            {
+                                Response.Redirect("Home.aspx");
+                            }
+                        }
+                        else if(role == 2)
                         {
                             Response.Redirect("makeCustomer.aspx");
                         }else if(role == 1)

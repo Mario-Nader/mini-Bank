@@ -91,10 +91,27 @@ namespace NBE.Controls
                             if (rowsAffected == 0)
                             {
                                 lit_status.Text = "an error happened please try again later";
+                                txt_address.Text = "";
+                                txt_age.Text = "";
+                                txt_email.Text = "";
+                                txt_name.Text = "";
+                                txt_nationalD.Text = "";
+                                txt_phone.Text = "";
+                                RadioButtonList1.ClearSelection();
+
+
                             }
                             else
                             {
-                                lit_status.Text = "customer creation request was submitted successfully";
+                                lit_status.Text = "customer creation request was submitted successfully \n the customer will enter with CIF :" + CIF + " and password : NBE@[customer's nationalID]";
+                                txt_address.Text = "";
+                                txt_age.Text = "";
+                                txt_email.Text = "";
+                                txt_name.Text = "";
+                                txt_nationalD.Text = "";
+                                txt_phone.Text = "";
+                                RadioButtonList1.ClearSelection();
+
                             }
 
                         }
@@ -110,11 +127,14 @@ namespace NBE.Controls
         protected void clear_button_clicked(object sender, EventArgs e)
         {
             txt_address.Text = "";
-            txt_email.Text = "";
             txt_age.Text = "";
+            txt_email.Text = "";
             txt_name.Text = "";
+            txt_nationalD.Text = "";
             txt_phone.Text = "";
             RadioButtonList1.ClearSelection();
+            lit_status.Text = "";
+
         }
     }
 }
