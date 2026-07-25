@@ -55,8 +55,12 @@
             CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" />
     </ItemTemplate>
 </asp:TemplateField>
-        <asp:BoundField DataField="comments" HeaderText="Comments" ReadOnly ="false"/>
-        <asp:CommandField ShowEditButton="true" EditText="Add Comment"/>
+
+<asp:TemplateField HeaderText ="Comment">
+    <ItemTemplate>
+        <asp:TextBox ID="txt_comment" runat="server" CssClass="form-control"></asp:TextBox>
+    </ItemTemplate>
+</asp:TemplateField>
 
 
     </Columns>

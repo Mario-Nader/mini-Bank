@@ -75,10 +75,11 @@ namespace NBE.Controls
                                 }
                                 reader.Close();
                             } while (repeatedCIF);
-                            String InsertCustomerStatment = "insert into Customers (Name, CIF, address, email, age, gender,MakerID,status,nationalID,MakerName) values (@username, @CIF, @address,@email,@age,@gender,@makerID,0,@nationalID,@makerName)";
+                            String InsertCustomerStatment = "insert into Customers (Name, CIF, address, email, age, gender,MakerID,status,nationalID,MakerName,phone) values (@username, @CIF, @address,@email,@age,@gender,@makerID,1,@nationalID,@makerName,@phone)";
 
                             SqlCommand InserCustomerCmd = new SqlCommand(InsertCustomerStatment, DBconnection);
                             InserCustomerCmd.Parameters.AddWithValue("@username", txt_name.Text);
+                            InserCustomerCmd.Parameters.AddWithValue("@phone", txt_phone.Text);
                             InserCustomerCmd.Parameters.AddWithValue("@CIF", CIF);
                             InserCustomerCmd.Parameters.AddWithValue("@address", txt_address.Text);
                             InserCustomerCmd.Parameters.AddWithValue("@email", txt_email.Text);

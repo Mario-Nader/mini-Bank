@@ -26,17 +26,17 @@
     <tr>
         <td class="auto-style4">your new Password :</td>
         <td class="auto-style5">
-            <asp:TextBox ID="txt_NewPassword" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txt_NewPassword" runat="server" TextMode="Password"></asp:TextBox>
         </td>
         <td class="auto-style6"></td>
     </tr>
     <tr>
         <td class="auto-style2">Retype :</td>
         <td class="auto-style3">
-            <asp:TextBox ID="txt_passwordConfirmation" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txt_passwordConfirmation" runat="server" TextMode ="Password"></asp:TextBox>
         </td>
         <td>
-            <asp:CompareValidator ID="CP_passwordConfirmation" runat="server" ControlToCompare="txt_NewPassword" ControlToValidate="txt_passwordConfirmation" Display="Dynamic" ErrorMessage="Password conirmation doesn't match"></asp:CompareValidator>
+            <asp:CompareValidator ID="CP_passwordConfirmation"  runat="server" ControlToCompare="txt_NewPassword" ControlToValidate="txt_passwordConfirmation" Display="Dynamic" ErrorMessage="Password conirmation doesn't match"></asp:CompareValidator>
         </td>
     </tr>
     <tr>

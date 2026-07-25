@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="mini_bankModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ACCOUNT">
+    <Key>
+      <PropertyRef Name="AccID" />
+    </Key>
+    <Property Name="AccID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customerID" Type="Int32" />
+    <Property Name="classcode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="currency" Type="Int32" />
+    <Property Name="dateCreated" Type="DateTime" Precision="0" />
+    <Property Name="status" Type="Int32" />
+    <Property Name="branch" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MakerID" Type="Int32" Nullable="false" />
+    <Property Name="CheckerID" Type="Int32" Nullable="false" />
+    <Property Name="amount" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_ACCOUNTS_CUSTOMERS" FromRole="ACCOUNTS" ToRole="CUSTOMERS" />
+    <NavigationProperty Name="log_accounts" Relationship="Self.FK_log_accounts_ACCOUNTS" FromRole="ACCOUNTS" ToRole="log_accounts" />
+  </EntityType>
+  <EntityType Name="accounts_look_up">
+    <Key>
+      <PropertyRef Name="AccountClassID" />
+    </Key>
+    <Property Name="AccountClassID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClassDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AccountclassCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="code" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="branches_look_up">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="flexCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="branch" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="currency_look_up">
+    <Key>
+      <PropertyRef Name="currencyID" />
+    </Key>
+    <Property Name="currencyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="currencyCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="currency_rate_log">
+    <Key>
+      <PropertyRef Name="ChangeID" />
+    </Key>
+    <Property Name="ChangeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FromCurrencyID" Type="Int32" Nullable="false" />
+    <Property Name="ToCurrencyID" Type="Int32" Nullable="false" />
+    <Property Name="OldRate" Type="Int32" Nullable="false" />
+    <Property Name="NewRate" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="currency_rate_look_up">
+    <Key>
+      <PropertyRef Name="RateID" />
+    </Key>
+    <Property Name="RateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FromCur" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ToCur" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Rate" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CUSTOMER">
+    <Key>
+      <PropertyRef Name="custID" />
+    </Key>
+    <Property Name="custID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CIF" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="age" Type="Int32" />
+    <Property Name="gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="datecreated" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="MakerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MakerID" Type="Int32" Nullable="false" />
+    <Property Name="CheckerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CheckerID" Type="Int32" />
+    <Property Name="status" Type="Int32" Nullable="false" />
+    <Property Name="nationalID" Type="String" MaxLength="14" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="comments" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ACCOUNTS" Relationship="Self.FK_ACCOUNTS_CUSTOMERS" FromRole="CUSTOMERS" ToRole="ACCOUNTS" />
+    <NavigationProperty Name="log_customers" Relationship="Self.FK_log_customers_CUSTOMERS" FromRole="CUSTOMERS" ToRole="log_customers" />
+    <NavigationProperty Name="USERS" Relationship="Self.FK_USERS_CUSTOMERS" FromRole="CUSTOMERS" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="log_accounts">
+    <Key>
+      <PropertyRef Name="logID" />
+    </Key>
+    <Property Name="logID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="custID" Type="Int32" Nullable="false" />
+    <Property Name="MakerID" Type="Int32" Nullable="false" />
+    <Property Name="CheckerID" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="branchCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="status" Type="Int32" Nullable="false" />
+    <Property Name="AccID" Type="Int32" Nullable="false" />
+    <Property Name="MakerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CheckerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ACCOUNT" Relationship="Self.FK_log_accounts_ACCOUNTS" FromRole="log_accounts" ToRole="ACCOUNTS" />
+  </EntityType>
+  <EntityType Name="log_customers">
+    <Key>
+      <PropertyRef Name="logID" />
+    </Key>
+    <Property Name="logID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="custID" Type="Int32" Nullable="false" />
+    <Property Name="MakerID" Type="Int32" Nullable="false" />
+    <Property Name="CheckerID" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="branchCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="status" Type="Int32" Nullable="false" />
+    <Property Name="MakerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CheckerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_log_customers_CUSTOMERS" FromRole="log_customers" ToRole="CUSTOMERS" />
+  </EntityType>
+  <EntityType Name="Role_look_up">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="status_look_up">
+    <Key>
+      <PropertyRef Name="statusNumber" />
+    </Key>
+    <Property Name="statusNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="USER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CustomerID" Type="Int32" />
+    <Property Name="Role" Type="Int32" />
+    <Property Name="active" Type="Boolean" />
+    <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_USERS_CUSTOMERS" FromRole="USERS" ToRole="CUSTOMERS" />
+  </EntityType>
+  <Association Name="FK_ACCOUNTS_CUSTOMERS">
+    <End Role="CUSTOMERS" Type="Self.CUSTOMER" Multiplicity="0..1" />
+    <End Role="ACCOUNTS" Type="Self.ACCOUNT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMERS">
+        <PropertyRef Name="custID" />
+      </Principal>
+      <Dependent Role="ACCOUNTS">
+        <PropertyRef Name="customerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_log_accounts_ACCOUNTS">
+    <End Role="ACCOUNTS" Type="Self.ACCOUNT" Multiplicity="1" />
+    <End Role="log_accounts" Type="Self.log_accounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ACCOUNTS">
+        <PropertyRef Name="AccID" />
+      </Principal>
+      <Dependent Role="log_accounts">
+        <PropertyRef Name="AccID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_log_customers_CUSTOMERS">
+    <End Role="CUSTOMERS" Type="Self.CUSTOMER" Multiplicity="1" />
+    <End Role="log_customers" Type="Self.log_customers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMERS">
+        <PropertyRef Name="custID" />
+      </Principal>
+      <Dependent Role="log_customers">
+        <PropertyRef Name="custID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USERS_CUSTOMERS">
+    <End Role="CUSTOMERS" Type="Self.CUSTOMER" Multiplicity="0..1" />
+    <End Role="USERS" Type="Self.USER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CUSTOMERS">
+        <PropertyRef Name="custID" />
+      </Principal>
+      <Dependent Role="USERS">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="mini_bankEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ACCOUNTS" EntityType="Self.ACCOUNT" />
+    <EntitySet Name="accounts_look_up" EntityType="Self.accounts_look_up" />
+    <EntitySet Name="branches_look_up" EntityType="Self.branches_look_up" />
+    <EntitySet Name="currency_look_up" EntityType="Self.currency_look_up" />
+    <EntitySet Name="currency_rate_log" EntityType="Self.currency_rate_log" />
+    <EntitySet Name="currency_rate_look_up" EntityType="Self.currency_rate_look_up" />
+    <EntitySet Name="CUSTOMERS" EntityType="Self.CUSTOMER" />
+    <EntitySet Name="log_accounts" EntityType="Self.log_accounts" />
+    <EntitySet Name="log_customers" EntityType="Self.log_customers" />
+    <EntitySet Name="Role_look_up" EntityType="Self.Role_look_up" />
+    <EntitySet Name="status_look_up" EntityType="Self.status_look_up" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="USERS" EntityType="Self.USER" />
+    <AssociationSet Name="FK_ACCOUNTS_CUSTOMERS" Association="Self.FK_ACCOUNTS_CUSTOMERS">
+      <End Role="CUSTOMERS" EntitySet="CUSTOMERS" />
+      <End Role="ACCOUNTS" EntitySet="ACCOUNTS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_log_accounts_ACCOUNTS" Association="Self.FK_log_accounts_ACCOUNTS">
+      <End Role="ACCOUNTS" EntitySet="ACCOUNTS" />
+      <End Role="log_accounts" EntitySet="log_accounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_log_customers_CUSTOMERS" Association="Self.FK_log_customers_CUSTOMERS">
+      <End Role="CUSTOMERS" EntitySet="CUSTOMERS" />
+      <End Role="log_customers" EntitySet="log_customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USERS_CUSTOMERS" Association="Self.FK_USERS_CUSTOMERS">
+      <End Role="CUSTOMERS" EntitySet="CUSTOMERS" />
+      <End Role="USERS" EntitySet="USERS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

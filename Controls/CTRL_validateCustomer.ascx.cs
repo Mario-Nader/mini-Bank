@@ -114,7 +114,7 @@ namespace NBE.Controls
                     SqlCommand Checkcmd = new SqlCommand(checkQuery, DBconnection);
                     SqlDataReader reader = Checkcmd.ExecuteReader();
                     if (reader.Read()) {
-                        if (Convert.ToInt32(reader["status"]) == 0 || Convert.ToInt32(reader["status"]) == 4)
+                        if (Convert.ToInt32(reader["status"]) == 1 || Convert.ToInt32(reader["status"]) == 5)
                         {
                             StillEditable = true;
                         }
@@ -128,7 +128,7 @@ namespace NBE.Controls
                     {
                         if (e.CommandName == "approveRow")
                         {
-                            String query = String.Format("update CUSTOMERS set status = 1 where custID = {0}", custID);
+                            String query = String.Format("update CUSTOMERS set status = 2 where custID = {0},checkerID = {1}, checkerName = '{2}'", custID,Convert.ToInt32(Session["ID"]), Session["uname"].ToString());
                             SqlCommand cmd = new SqlCommand(query, DBconnection);
                             cmd.ExecuteNonQuery();
                             String getCustQuery = String.Format("select * from CUSTOMERS where custID = {0}", custID);
@@ -155,13 +155,19 @@ namespace NBE.Controls
                         }
                         else if (e.CommandName == "rejectRow")
                         {
-                            String query = String.Format("update CUSTOMERS set status = 2 , checkerID = {0}, checkerName = '{1}' where CustID = {2}", Convert.ToInt32(Session["ID"]), Session["uname"].ToString(), custID);
+                            String query = String.Format("update CUSTOMERS set status = 3 , checkerID = {0}, checkerName = '{1}' where CustID = {2}", Convert.ToInt32(Session["ID"]), Session["uname"].ToString(), custID);
                             SqlCommand cmd = new SqlCommand(query, DBconnection);
                             cmd.ExecuteNonQuery();
                         }
                         else if (e.CommandName == "requestEditRow")
                         {
-                            String query = String.Format("update CUSTOMERS set status = 3 ,checkerID = {0}, checkerName = '{1}' where custID = {2}", Convert.ToInt32(Session["ID"]), Session["uname"].ToString(), custID);
+                            GridViewRow row = (GridViewRow)gv_CustomerRequests.Rows[rowIndex];
+                            TextBox TXTcomment = (TextBox)row.FindControl("txt_comment");
+                            String comment = "";
+                            if (TXTcomment != null) { 
+                             comment = TXTcomment.Text;
+                            }
+                            String query = String.Format("update CUSTOMERS set status = 4 ,checkerID = {0}, checkerName = '{1}' , comments = '{2}' where custID = {3}", Convert.ToInt32(Session["ID"]), Session["uname"].ToString(), comment,custID);
                             SqlCommand cmd = new SqlCommand(query, DBconnection);
                             cmd.ExecuteNonQuery();
                         }
@@ -201,7 +207,7 @@ namespace NBE.Controls
                 try
                 {
                     DBconnection.Open();
-                    SqlCommand gridcmd = new SqlCommand("select custID, name,address,age,nationalID,makerName,status,comments from CUSTOMERS where status in (0 , 4) order by datecreated", DBconnection);
+                    SqlCommand gridcmd = new SqlCommand("select custID, name,address,age,nationalID,makerName,status,comments from CUSTOMERS where status in (1 , 5) order by datecreated", DBconnection);
                     SqlDataAdapter adapter = new SqlDataAdapter(gridcmd);
                     DataSet ds = new DataSet();
                     adapter.Fill(ds);

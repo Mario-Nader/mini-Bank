@@ -1,4 +1,5 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.5.2\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.5.2\build\EntityFramework.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -43,7 +44,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.5.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.5.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -91,8 +100,16 @@
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.js" />
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.min.js" />
     <Content Include="Controls\ChangePassword.ascx" />
+    <Content Include="Controls\CTRL_addAccount.ascx" />
     <Content Include="Controls\CTRL_CreateCustomer.ascx" />
+    <Content Include="Controls\CTRL_transfereMoney.ascx" />
+    <Content Include="Controls\CTRL_ValidateAccounts.ascx" />
     <Content Include="Controls\CTRL_validateCustomer.ascx" />
+    <Content Include="Controls\CTRL_WithdrawMoney.ascx" />
+    <Content Include="Controls\CTRL_DepositeMoney.ascx" />
+    <Content Include="DepositMoney.aspx" />
+    <Content Include="WithdrawMoney.aspx" />
+    <Content Include="createAccount.aspx" />
     <Content Include="CustomerChangePassword.aspx" />
     <Content Include="makeCustomer.aspx" />
     <Content Include="Home.aspx" />
@@ -119,23 +136,58 @@
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.esm.min.js.map" />
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.js.map" />
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.min.js.map" />
+    <EntityDeploy Include="NBEDatabase.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>NBEDatabase.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="NBEDatabase.edmx.diagram">
+      <DependentUpon>NBEDatabase.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
+    <Content Include="NBEDatabase.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NBEDatabase.edmx</DependentUpon>
+      <LastGenOutput>NBEDatabase.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="NBEDatabase.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NBEDatabase.edmx</DependentUpon>
+      <LastGenOutput>NBEDatabase.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
     <Content Include="src\images\NBELogo.jpeg" />
+    <Content Include="TransfereMoney.aspx" />
+    <Content Include="ValidateAccounts.aspx" />
     <Content Include="validateCustomer.aspx" />
     <Content Include="Web.config" />
     <Content Include="WebForm1.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ACCOUNT.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="accounts_look_up.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="branches_look_up.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ChangePassword.ascx.cs">
       <DependentUpon>ChangePassword.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controls\ChangePassword.ascx.designer.cs">
       <DependentUpon>ChangePassword.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CTRL_addAccount.ascx.cs">
+      <DependentUpon>CTRL_addAccount.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CTRL_addAccount.ascx.designer.cs">
+      <DependentUpon>CTRL_addAccount.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\CTRL_CreateCustomer.ascx.cs">
       <DependentUpon>CTRL_CreateCustomer.ascx</DependentUpon>
@@ -144,6 +196,20 @@
     <Compile Include="Controls\CTRL_CreateCustomer.ascx.designer.cs">
       <DependentUpon>CTRL_CreateCustomer.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CTRL_transfereMoney.ascx.cs">
+      <DependentUpon>CTRL_transfereMoney.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CTRL_transfereMoney.ascx.designer.cs">
+      <DependentUpon>CTRL_transfereMoney.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CTRL_ValidateAccounts.ascx.cs">
+      <DependentUpon>CTRL_ValidateAccounts.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CTRL_ValidateAccounts.ascx.designer.cs">
+      <DependentUpon>CTRL_ValidateAccounts.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CTRL_validateCustomer.ascx.cs">
       <DependentUpon>CTRL_validateCustomer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -151,12 +217,65 @@
     <Compile Include="Controls\CTRL_validateCustomer.ascx.designer.cs">
       <DependentUpon>CTRL_validateCustomer.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CTRL_WithdrawMoney.ascx.cs">
+      <DependentUpon>CTRL_WithdrawMoney.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CTRL_WithdrawMoney.ascx.designer.cs">
+      <DependentUpon>CTRL_WithdrawMoney.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CTRL_DepositeMoney.ascx.cs">
+      <DependentUpon>CTRL_DepositeMoney.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CTRL_DepositeMoney.ascx.designer.cs">
+      <DependentUpon>CTRL_DepositeMoney.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="DepositMoney.aspx.cs">
+      <DependentUpon>DepositMoney.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DepositMoney.aspx.designer.cs">
+      <DependentUpon>DepositMoney.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WithdrawMoney.aspx.cs">
+      <DependentUpon>WithdrawMoney.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WithdrawMoney.aspx.designer.cs">
+      <DependentUpon>WithdrawMoney.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="createAccount.aspx.cs">
+      <DependentUpon>createAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="createAccount.aspx.designer.cs">
+      <DependentUpon>createAccount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="currency_look_up.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="currency_rate_log.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="currency_rate_look_up.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CUSTOMER.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="CustomerChangePassword.aspx.cs">
       <DependentUpon>CustomerChangePassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CustomerChangePassword.aspx.designer.cs">
       <DependentUpon>CustomerChangePassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="log_accounts.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="log_customers.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="makeCustomer.aspx.cs">
       <DependentUpon>makeCustomer.aspx</DependentUpon>
@@ -179,7 +298,48 @@
     <Compile Include="mainSite.Master.designer.cs">
       <DependentUpon>mainSite.Master</DependentUpon>
     </Compile>
+    <Compile Include="NBEDatabase.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NBEDatabase.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NBEDatabase.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NBEDatabase.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NBEDatabase.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Role_look_up.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="status_look_up.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TransfereMoney.aspx.cs">
+      <DependentUpon>TransfereMoney.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TransfereMoney.aspx.designer.cs">
+      <DependentUpon>TransfereMoney.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="USER.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ValidateAccounts.aspx.cs">
+      <DependentUpon>ValidateAccounts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ValidateAccounts.aspx.designer.cs">
+      <DependentUpon>ValidateAccounts.aspx</DependentUpon>
+    </Compile>
     <Compile Include="validateCustomer.aspx.cs">
       <DependentUpon>validateCustomer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -206,7 +366,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -237,7 +399,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.5.2\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.5.2\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.5.2\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.5.2\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="packages\EntityFramework.6.5.2\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.5.2\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
