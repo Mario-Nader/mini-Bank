@@ -11,7 +11,8 @@ namespace NBE
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Drawing.Printing;
+
     public partial class ACCOUNT
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -31,9 +32,11 @@ namespace NBE
         public int CheckerID { get; set; }
         public long amount { get; set; }
         public string AccountNumber { get; set; }
-
         public string uniqueIdentifier {  get; set; }
-
+        public string Comment {  get; set; }
+        public string MakerName {  get; set; }
+        public string CheckerName { get; set; }
+        public string CustomerName { get; set; }
         public virtual CUSTOMER CUSTOMER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<log_accounts> log_accounts { get; set; }

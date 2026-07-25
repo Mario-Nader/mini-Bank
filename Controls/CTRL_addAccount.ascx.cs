@@ -17,6 +17,7 @@ namespace NBE.Controls
             {
                 using(var db = new mini_bankEntities())
                 {
+                    #region filling the drop down lists
                     var query = from account_look_up in db.accounts_look_up select account_look_up.ClassDescription;
                     List<String> ClassDespcriptions = query.ToList();
                     for (int i = 0; i < ClassDespcriptions.Count; i++) {
@@ -32,7 +33,7 @@ namespace NBE.Controls
                     for (int i = 0; i < Currencies.Count; i++) { 
                         DDL_currency.Items.Add(Currencies[i]);
                     }
-
+                    #endregion
                 }
             }
         }
@@ -96,6 +97,11 @@ namespace NBE.Controls
                             .Where(curr => curr.currencyCode == currency)
                             .Select(curr => curr.currencyID)
                             .Single();
+                        String CustomerName = db.CUSTOMERS
+                            .Where(c => c.custID == custID)
+                            .Select(c => c.Name)
+                            .Single();
+
                         #endregion
 
                         #region handling the account number
@@ -137,6 +143,8 @@ namespace NBE.Controls
                         newAccount.currency = CurrencyID;
                         newAccount.classcode = classCode;
                         newAccount.customerID = custID;
+                        newAccount.MakerName = Session["uname"].ToString();
+                        newAccount.CustomerName = CustomerName;
                         db.ACCOUNTS.Add(newAccount);
                         db.SaveChanges();
                         #endregion

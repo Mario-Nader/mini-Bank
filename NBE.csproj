@@ -205,7 +205,6 @@
     </Compile>
     <Compile Include="Controls\CTRL_ValidateAccounts.ascx.cs">
       <DependentUpon>CTRL_ValidateAccounts.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controls\CTRL_ValidateAccounts.ascx.designer.cs">
       <DependentUpon>CTRL_ValidateAccounts.ascx</DependentUpon>
