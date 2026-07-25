@@ -15,13 +15,22 @@ namespace NBE.Controls
     {
 
         /// <summary>
-        /// txt_srcAccount control.
+        /// ddl_srcAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_srcAccount;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_srcAccount;
+
+        /// <summary>
+        /// rfv_srcAccNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_srcAccNumber;
 
         /// <summary>
         /// txt_DistAccount control.
@@ -33,6 +42,33 @@ namespace NBE.Controls
         protected global::System.Web.UI.WebControls.TextBox txt_DistAccount;
 
         /// <summary>
+        /// rfv_distAccNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_distAccNumber;
+
+        /// <summary>
+        /// txt_balance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_balance;
+
+        /// <summary>
+        /// txt_ownerName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_ownerName;
+
+        /// <summary>
         /// txt_amount control.
         /// </summary>
         /// <remarks>
@@ -42,6 +78,24 @@ namespace NBE.Controls
         protected global::System.Web.UI.WebControls.TextBox txt_amount;
 
         /// <summary>
+        /// txt_distCurr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_distCurr;
+
+        /// <summary>
+        /// txt_srcCurr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_srcCurr;
+
+        /// <summary>
         /// btn_submit control.
         /// </summary>
         /// <remarks>
@@ -49,6 +103,15 @@ namespace NBE.Controls
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_submit;
+
+        /// <summary>
+        /// check_distAcc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button check_distAcc;
 
         /// <summary>
         /// lit_state control.

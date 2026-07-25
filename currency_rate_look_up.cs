@@ -14,7 +14,7 @@ namespace NBE
     
     public partial class currency_rate_look_up
     {
-        public int RateID { get; set; }
+        public float RateID { get; set; }
         public string FromCur { get; set; }
         public string ToCur { get; set; }
         public int Rate { get; set; }
