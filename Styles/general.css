@@ -1,0 +1,88 @@
+﻿body {
+    background: #f6f7f5;
+    font-family: "Segoe UI",Tahoma,sans-serif;
+    color: #2c2c2c;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.08);
+}
+
+td {
+    padding: 10px 14px;
+    vertical-align: middle;
+}
+
+input[type=text],
+input[type=password],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #d8d8d8;
+    border-radius: 8px;
+    transition: .25s;
+    font-size: 14px;
+}
+
+    input[type=text]:focus,
+    input[type=password]:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #c8a437;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(200,164,55,.18);
+    }
+
+input[type=submit],
+button {
+    background: #0f4b36;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-weight: 600;
+    transition: .25s;
+}
+
+    input[type=submit]:hover,
+    button:hover {
+        background: #146147;
+    }
+
+a {
+    color: #0f4b36;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+    a:hover {
+        color: #c8a437;
+    }
+
+span[style*="color:Red"],
+.validator{
+    color: #c0392b;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+#lit_status,
+#lit_err,
+#lit_state,
+#lit_test {
+    display: block;
+    margin-top: 12px;
+    padding: 12px;
+    background: #eef7f2;
+    border-left: 5px solid #0f4b36;
+    border-radius: 6px;
+    color: #0f4b36;
+    font-weight: 600;
+}

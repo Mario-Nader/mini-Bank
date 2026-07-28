@@ -96,6 +96,7 @@ namespace NBE.Controls
                  .Single();
                 log.senderName = Session["uname"].ToString();
                 log.recieverName = txt_ownerName.Text;
+                log.dateCreated = DateTime.Now;
 
                 if (distAccount == null)
                 {

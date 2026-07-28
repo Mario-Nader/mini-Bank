@@ -131,10 +131,10 @@
           </Key>
           <Property Name="transactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="customerName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="AccountNumber" Type="nvarchar" MaxLength="14" Nullable="false" />
+          <Property Name="AccountNumber" Type="nvarchar" MaxLength="19" Nullable="false" />
           <Property Name="amount" Type="bigint" Nullable="false" />
           <Property Name="Deposite" Type="bit" Nullable="false" />
-          <Property Name="dateCreated" Type="datetime" Nullable="false" />
+          <Property Name="dateCreated" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="status_look_up">
           <Key>
@@ -430,7 +430,6 @@
             <End Role="USERS" EntitySet="USERS" />
           </AssociationSet>
           <EntitySet Name="currency_rate_look_up" EntityType="mini_bankModel.currency_rate_look_up" />
-          <EntitySet Name="SingleSideTransactions_log" EntityType="mini_bankModel.SingleSideTransactions_log" />
           <EntitySet Name="Transactions_log" EntityType="mini_bankModel.Transactions_log" />
           <EntitySet Name="log_accounts" EntityType="mini_bankModel.log_accounts" />
           <AssociationSet Name="FK_log_accounts_ACCOUNTS" Association="mini_bankModel.FK_log_accounts_ACCOUNTS">
@@ -442,6 +441,7 @@
             <End Role="CUSTOMER" EntitySet="CUSTOMERS" />
             <End Role="log_customers" EntitySet="log_customers" />
           </AssociationSet>
+          <EntitySet Name="SingleSideTransactions_log" EntityType="mini_bankModel.SingleSideTransactions_log" />
         </EntityContainer>
         <EntityType Name="currency_rate_look_up">
           <Key>
@@ -451,17 +451,6 @@
           <Property Name="FromCur" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="ToCur" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="Rate" Type="Double" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SingleSideTransactions_log">
-          <Key>
-            <PropertyRef Name="transactionID" />
-          </Key>
-          <Property Name="transactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="customerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="true" />
-          <Property Name="amount" Type="Int64" Nullable="false" />
-          <Property Name="Deposite" Type="Boolean" Nullable="false" />
-          <Property Name="dateCreated" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="Transactions_log">
           <Key>
@@ -535,6 +524,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SingleSideTransactions_log">
+          <Key>
+            <PropertyRef Name="transactionID" />
+          </Key>
+          <Property Name="transactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="true" />
+          <Property Name="amount" Type="Int64" Nullable="false" />
+          <Property Name="Deposite" Type="Boolean" Nullable="false" />
+          <Property Name="dateCreated" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -673,18 +673,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SingleSideTransactions_log">
-            <EntityTypeMapping TypeName="mini_bankModel.SingleSideTransactions_log">
-              <MappingFragment StoreEntitySet="SingleSideTransactions_log">
-                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
-                <ScalarProperty Name="Deposite" ColumnName="Deposite" />
-                <ScalarProperty Name="amount" ColumnName="amount" />
-                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
-                <ScalarProperty Name="customerName" ColumnName="customerName" />
-                <ScalarProperty Name="transactionID" ColumnName="transactionID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Transactions_log">
             <EntityTypeMapping TypeName="mini_bankModel.Transactions_log">
               <MappingFragment StoreEntitySet="Transactions_log">
@@ -731,6 +719,18 @@
                 <ScalarProperty Name="MakerID" ColumnName="MakerID" />
                 <ScalarProperty Name="custID" ColumnName="custID" />
                 <ScalarProperty Name="logID" ColumnName="logID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SingleSideTransactions_log">
+            <EntityTypeMapping TypeName="mini_bankModel.SingleSideTransactions_log">
+              <MappingFragment StoreEntitySet="SingleSideTransactions_log">
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="Deposite" ColumnName="Deposite" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="customerName" ColumnName="customerName" />
+                <ScalarProperty Name="transactionID" ColumnName="transactionID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

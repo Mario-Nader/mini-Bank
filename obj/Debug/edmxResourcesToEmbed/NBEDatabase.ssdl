@@ -126,10 +126,10 @@
     </Key>
     <Property Name="transactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="customerName" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="AccountNumber" Type="nvarchar" MaxLength="14" Nullable="false" />
+    <Property Name="AccountNumber" Type="nvarchar" MaxLength="19" Nullable="false" />
     <Property Name="amount" Type="bigint" Nullable="false" />
     <Property Name="Deposite" Type="bit" Nullable="false" />
-    <Property Name="dateCreated" Type="datetime" Nullable="false" />
+    <Property Name="dateCreated" Type="datetime2" Precision="7" Nullable="false" />
   </EntityType>
   <EntityType Name="status_look_up">
     <Key>

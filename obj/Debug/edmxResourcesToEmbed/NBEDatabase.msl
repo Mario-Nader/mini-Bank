@@ -133,18 +133,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="SingleSideTransactions_log">
-      <EntityTypeMapping TypeName="mini_bankModel.SingleSideTransactions_log">
-        <MappingFragment StoreEntitySet="SingleSideTransactions_log">
-          <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
-          <ScalarProperty Name="Deposite" ColumnName="Deposite" />
-          <ScalarProperty Name="amount" ColumnName="amount" />
-          <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
-          <ScalarProperty Name="customerName" ColumnName="customerName" />
-          <ScalarProperty Name="transactionID" ColumnName="transactionID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Transactions_log">
       <EntityTypeMapping TypeName="mini_bankModel.Transactions_log">
         <MappingFragment StoreEntitySet="Transactions_log">
@@ -191,6 +179,18 @@
           <ScalarProperty Name="MakerID" ColumnName="MakerID" />
           <ScalarProperty Name="custID" ColumnName="custID" />
           <ScalarProperty Name="logID" ColumnName="logID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SingleSideTransactions_log">
+      <EntityTypeMapping TypeName="mini_bankModel.SingleSideTransactions_log">
+        <MappingFragment StoreEntitySet="SingleSideTransactions_log">
+          <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+          <ScalarProperty Name="Deposite" ColumnName="Deposite" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+          <ScalarProperty Name="customerName" ColumnName="customerName" />
+          <ScalarProperty Name="transactionID" ColumnName="transactionID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

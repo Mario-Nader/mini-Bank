@@ -114,6 +114,11 @@
     <Content Include="DepositMoney.aspx" />
     <Content Include="EditAccounts.aspx" />
     <Content Include="EditCustomers.aspx" />
+    <Content Include="Styles\buttons.css" />
+    <Content Include="Styles\general.css" />
+    <Content Include="Styles\grids.css" />
+    <Content Include="Styles\makerMenu.css" />
+    <Content Include="Styles\site.css" />
     <Content Include="WithdrawMoney.aspx" />
     <Content Include="createAccount.aspx" />
     <Content Include="CustomerChangePassword.aspx" />

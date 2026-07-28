@@ -162,7 +162,6 @@
       <End Role="USERS" EntitySet="USERS" />
     </AssociationSet>
     <EntitySet Name="currency_rate_look_up" EntityType="mini_bankModel.currency_rate_look_up" />
-    <EntitySet Name="SingleSideTransactions_log" EntityType="mini_bankModel.SingleSideTransactions_log" />
     <EntitySet Name="Transactions_log" EntityType="mini_bankModel.Transactions_log" />
     <EntitySet Name="log_accounts" EntityType="mini_bankModel.log_accounts" />
     <AssociationSet Name="FK_log_accounts_ACCOUNTS" Association="mini_bankModel.FK_log_accounts_ACCOUNTS">
@@ -174,6 +173,7 @@
       <End Role="CUSTOMER" EntitySet="CUSTOMERS" />
       <End Role="log_customers" EntitySet="log_customers" />
     </AssociationSet>
+    <EntitySet Name="SingleSideTransactions_log" EntityType="mini_bankModel.SingleSideTransactions_log" />
   </EntityContainer>
   <EntityType Name="currency_rate_look_up">
     <Key>
@@ -183,17 +183,6 @@
     <Property Name="FromCur" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
     <Property Name="ToCur" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
     <Property Name="Rate" Type="Double" Nullable="false" />
-  </EntityType>
-  <EntityType Name="SingleSideTransactions_log">
-    <Key>
-      <PropertyRef Name="transactionID" />
-    </Key>
-    <Property Name="transactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="customerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="true" />
-    <Property Name="amount" Type="Int64" Nullable="false" />
-    <Property Name="Deposite" Type="Boolean" Nullable="false" />
-    <Property Name="dateCreated" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
   <EntityType Name="Transactions_log">
     <Key>
@@ -267,4 +256,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="SingleSideTransactions_log">
+    <Key>
+      <PropertyRef Name="transactionID" />
+    </Key>
+    <Property Name="transactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="customerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="true" />
+    <Property Name="amount" Type="Int64" Nullable="false" />
+    <Property Name="Deposite" Type="Boolean" Nullable="false" />
+    <Property Name="dateCreated" Type="DateTime" Nullable="false" Precision="7" />
+  </EntityType>
 </Schema>

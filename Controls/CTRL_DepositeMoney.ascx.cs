@@ -23,34 +23,44 @@ namespace NBE.Controls
             }
             else
             {
-                using (mini_bankEntities db = new mini_bankEntities())
+                lit_status.Text = "";
+                try
                 {
-                    ACCOUNT account = db.ACCOUNTS
-                                      .Where(a => a.AccountNumber == txt_AccountNumber.Text)
-                                      .Select(a => a)
-                                      .Single();
-                    if (account == null)
+                    using (mini_bankEntities db = new mini_bankEntities())
                     {
-                        lit_status.Text = "there is no account with that number";
+                        string accountNumber = txt_AccountNumber.Text;
+                        ACCOUNT account = db.ACCOUNTS
+                                          .Where(a => a.AccountNumber == accountNumber)
+                                          .Select(a => a)
+                                          .Single();
+                        if (account == null)
+                        {
+                            lit_status.Text = "there is no account with that number";
+                        }
+                        else
+                        {
+                            //ACCOUNT update = new ACCOUNT();
+                            //update.amount += Convert.ToInt32(txt_amount.Text);
+                            //update.AccID = account.AccID;
+                            //db.ACCOUNTS.Attach(update);
+                            log.dateCreated = DateTime.Now;
+                            log.amount = Convert.ToInt32(txt_amount.Text);
+                            log.AccountNumber = account.AccountNumber;
+                            int custID = Convert.ToInt32(account.customerID);
+                            string name = db.CUSTOMERS.Where(cust => cust.custID == custID).Select(c => c.Name).Single();
+                            log.customerName = name;
+                            log.Deposite = true;
+                            account.amount += Convert.ToInt32(txt_amount.Text);
+                            db.SingleSideTransactions_log.Add(log);
+                            db.SaveChanges();
+                            txt_amount.Text = "";
+                            txt_AccountNumber.Text = "";
+                        }
                     }
-                    else
-                    {
-                        //ACCOUNT update = new ACCOUNT();
-                        //update.amount += Convert.ToInt32(txt_amount.Text);
-                        //update.AccID = account.AccID;
-                        //db.ACCOUNTS.Attach(update);
-                        log.amount = Convert.ToInt32(txt_amount.Text);
-                        log.AccountNumber = account.AccountNumber;
-                        int custID = Convert.ToInt32(account.customerID);
-                        string name = db.CUSTOMERS.Where(cust => cust.custID == custID).Select(c => c.Name).Single();
-                        log.customerName = name;
-                        log.Deposite = true;
-                        account.amount += Convert.ToInt32(txt_amount.Text);
-                        db.SingleSideTransactions_log.Add(log);
-                        db.SaveChanges();
-                        txt_amount.Text = "";
-                        txt_AccountNumber.Text = "";
-                    }
+                }
+                catch(Exception exp)
+                {
+                    lit_status.Text = exp.Message;
                 }
             }
         }

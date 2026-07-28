@@ -18,12 +18,12 @@
         <AssociationConnector Association="mini_bankModel.FK_ACCOUNTS_CUSTOMERS" ManuallyRouted="false" />
         <AssociationConnector Association="mini_bankModel.FK_USERS_CUSTOMERS" ManuallyRouted="false" />
         <EntityTypeShape EntityType="mini_bankModel.currency_rate_look_up" Width="1.5" PointX="8.375" PointY="9.75" />
-        <EntityTypeShape EntityType="mini_bankModel.SingleSideTransactions_log" Width="2.125" PointX="10.375" PointY="0.75" />
         <EntityTypeShape EntityType="mini_bankModel.Transactions_log" Width="2.125" PointX="10.375" PointY="9.75" />
         <EntityTypeShape EntityType="mini_bankModel.log_accounts" Width="1.5" PointX="5.25" PointY="1" />
         <AssociationConnector Association="mini_bankModel.FK_log_accounts_ACCOUNTS" />
         <EntityTypeShape EntityType="mini_bankModel.log_customers" Width="1.5" PointX="3" PointY="13.125" />
         <AssociationConnector Association="mini_bankModel.FK_log_customers_CUSTOMERS" />
+        <EntityTypeShape EntityType="mini_bankModel.SingleSideTransactions_log" Width="1.5" PointX="10.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -51,7 +51,7 @@
             <asp:Button ID="btn_submit" runat="server" Text="Transfere" OnClick="btn_submit_Click" />
         </td>
         <td>
-            <asp:Button ID="check_distAcc" runat="server" Text="Check Distenation Account" OnClick="check_distAcc_Click" />
+            <asp:Button ID="check_distAcc" runat="server" Text="Check Distenation Account" OnClick="check_distAcc_Click" CausesValidation="False" />
         </td>
     </tr>
     <tr>

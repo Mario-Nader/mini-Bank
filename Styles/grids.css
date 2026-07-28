@@ -1,0 +1,36 @@
+﻿table[id*=gv] {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 6px 18px rgba(0,0,0,.08);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+    table[id*=gv] th {
+        background: #0f4b36;
+        color: white;
+        padding: 14px;
+        font-weight: 600;
+    }
+
+    table[id*=gv] td {
+        padding: 12px;
+        border-bottom: 1px solid #ececec;
+    }
+
+    table[id*=gv] tr:nth-child(even) {
+        background: #fafafa;
+    }
+
+    table[id*=gv] tr:hover {
+        background: #f3f8f5;
+    }
+
+    table[id*=gv] input[type=text] {
+        margin: 0;
+    }
+
+    table[id*=gv] input[type=submit] {
+        margin: 2px;
+    }

@@ -26,9 +26,15 @@ namespace NBE.Controls
                                   .Where(acc => acc.AccountNumber == accountNumber)
                                   .Select(acc => acc)
                                   .Single();
+                string custName = db.CUSTOMERS
+             .Where(c => c.nationalID == txt_nationalID.Text)
+             .Select(c => c.Name)
+             .Single();
+                log.customerName = custName;
                 log.AccountNumber = accountNumber;
                 log.amount = Convert.ToInt32(txt_amount.Text);
                 log.Deposite = false;
+                log.dateCreated = DateTime.Now;
                 if (account != null) {
                     if (txt_amount.Text.Length == 0)
                     {
@@ -64,6 +70,11 @@ namespace NBE.Controls
         {
             try
             {
+                if(txt_nationalID.Text.Length < 14)
+                {
+                    lit_status.Text = "please enter a proper national ID";
+                    return;
+                }
                 using (mini_bankEntities db = new mini_bankEntities())
                 {
                     int custID = db.CUSTOMERS

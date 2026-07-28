@@ -7,51 +7,39 @@
     <title></title>
     <link href ="bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet"/>
     <script src ="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+    <link href="Styles/site.css" rel="stylesheet" />
+     <link href="Styles/general.css" rel="stylesheet" />
+     <link href="Styles/grids.css" rel="stylesheet" />
+     <link href="Styles/buttons.css" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="CPH_head" runat="server">
     </asp:ContentPlaceHolder>
-    <style type="text/css">
-        .auto-style1 {
-            width: 100%;
-        }
-        .auto-style2 {
-            width: 13%;
-        }
-        .auto-style3 {
-            width: 53px;
-            height: 55px;
-        }
-        .auto-style4 {
-            width: 13%;
-            height: 51px;
-        }
-    </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
         </div>
-        <table class="auto-style1">
+        <table class="layout-table">
             <tr>
-                <td class="auto-style4">
+                <td class="header-bar">
                     <img alt="NBE logo" class="auto-style3" src="src/images/NBELogo.jpeg" />&nbsp; 
                     <div style="font-size:small; width: 182px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NBE Banking system</div> 
                 </td>
             </tr>
             <tr>
-                <td class="auto-style2">
+               <td class="sidebar">
             <asp:ContentPlaceHolder ID="CPH_menu" runat="server">
             </asp:ContentPlaceHolder>
                 </td>
-                <td>
+                <td class="page-content">
             <asp:ContentPlaceHolder ID="CPH_content" runat="server">
             </asp:ContentPlaceHolder>
                 </td>
             </tr>
             <tr>
                 <td class="auto-style2">
-                    <asp:Button ID="logOut" runat="server" CausesValidation="False" CssClass="btn btn-danger" OnClick="logOut_Click" Text="Log Out" />
+                    <asp:Button ID="logOut" runat="server" CausesValidation="False" CssClass="logout-btn" OnClick="logOut_Click" Text="Log Out" />
                 </td>
-                <td style="font-size:xx-small" class ="text-muted"><center>Copyrights reserved for NBE @ 2026</center></td>
+                <td class="footer"><center>Copyrights reserved for NBE @ 2026</center></td>
             </tr>
         </table>
     </form>

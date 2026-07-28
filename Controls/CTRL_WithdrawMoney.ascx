@@ -50,7 +50,7 @@
             <asp:Button ID="btn_submit" runat="server" Text="Withdraw" OnClick="btn_submit_Click" />
         </td>
         <td class="auto-style5">
-            <asp:Button ID="get_Accounts" runat="server" OnClick="get_Accounts_Click" style="margin-left: 0px" Text="Get Accounts" />
+            <asp:Button ID="get_Accounts" runat="server" OnClick="get_Accounts_Click" style="margin-left: 0px" Text="Get Accounts" CausesValidation="False" />
         </td>
     </tr>
 </table>
