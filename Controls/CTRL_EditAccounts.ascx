@@ -41,7 +41,7 @@
         <asp:Label ID="lbl_branch" runat="server" Text='<%#Eval("branch") %>'></asp:Label>
     </ItemTemplate>
     <EditItemTemplate>
-        <asp:TextBox ID="txt_branch" runat="server" Text='<%#Bind("branch")%>' cssClass="form-control"></asp:TextBox>
+        <asp:DropDownList ID="ddl_branch" runat="server"></asp:DropDownList>
     </EditItemTemplate>
 </asp:TemplateField>
 
@@ -51,64 +51,34 @@
         <asp:Label ID="lbl_class" runat="server" Text='<%# Eval("AccountClass") %>'></asp:Label>
     </ItemTemplate>
     <EditItemTemplate>
-        <asp:TextBox ID="txt_class" runat="server" Text='<%#Bind("AccountClass")%>' cssClass="form-control"></asp:TextBox>
+        <asp:DropDownList ID="ddl_class" runat="server"></asp:DropDownList>
     </EditItemTemplate>
 </asp:TemplateField>
 
 <%-- comment --%>
 <asp:TemplateField HeaderText ="Comment">
     <ItemTemplate>
-        <asp:TextBox ID="txt_comment" runat="server" Text='<%#Eval("Comment") %>' CssClass="form-control"></asp:TextBox>
+        <asp:TextBox ID="txt_comment" ReadOnly="true" runat="server" Text='<%#Eval("Comment") %>' CssClass="form-control"></asp:TextBox>
     </ItemTemplate>
     <EditItemTemplate>
          <asp:TextBox ID="txt_commentEdited" runat="server" Text='<%#Bind("Comment") %>' CssClass="form-control"></asp:TextBox>
     </EditItemTemplate>
 </asp:TemplateField>
 
-<%-- approve button --%>
-<asp:TemplateField >
-   <ItemTemplate>
-        <asp:Button
-            ID="btnApprove"
-            runat="server"
-            Text="Approve"
-            CssClass="btn btn-success"
-            CommandName="approveRow"
-            CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" />
+<asp:TemplateField>
+
+    <ItemTemplate>
+        <%-- The CommandName must be exactly "Edit" --%>
+        <asp:Button ID="btn_edit" runat="server" CommandName="Edit" Text="Edit" CssClass="btn btn-primary" />
     </ItemTemplate>
 
+    <EditItemTemplate>
+        <%-- The CommandNames must be exactly "Update" and "Cancel" --%>
+        <asp:Button ID="btn_Update" runat="server" CommandName="Update" Text="Send to check" CssClass="btn btn-success" />
+        <asp:Button ID="btnCancel" runat="server" CommandName="Cancel" Text="Cancel" CssClass="btn btn-secondary" />
+    </EditItemTemplate>
 
 </asp:TemplateField>
-
-<%-- reject --%>
-<asp:TemplateField >
-   <ItemTemplate>
-        <asp:Button
-            ID="btnReject"
-            runat="server"
-            Text="Reject"
-            CssClass="btn btn-danger"
-            CommandName="rejectRow"
-            CommandArgument="<%# ((GridViewRow)Container).RowIndex %>" />
-    </ItemTemplate>
-
-
-</asp:TemplateField>
-
-    <asp:TemplateField>
-
-        <ItemTemplate>
-            <%-- The CommandName must be exactly "Edit" --%>
-            <asp:Button ID="btn_edit" runat="server" CommandName="Edit" Text="Edit" CssClass="btn btn-primary" />
-        </ItemTemplate>
-
-        <EditItemTemplate>
-            <%-- The CommandNames must be exactly "Update" and "Cancel" --%>
-            <asp:Button ID="btn_Update" runat="server" CommandName="Update" Text="Send to check" CssClass="btn btn-success" />
-            <asp:Button ID="btnCancel" runat="server" CommandName="Cancel" Text="Cancel" CssClass="btn btn-secondary" />
-        </EditItemTemplate>
-
-    </asp:TemplateField>
 
     </Columns>
 </asp:GridView>

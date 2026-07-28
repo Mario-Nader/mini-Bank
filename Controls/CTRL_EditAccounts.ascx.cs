@@ -19,7 +19,9 @@ namespace NBE.Controls
             public string currency { get; set; }
             public long initialAmount { get; set; }
             public string branch { get; set; }
+            public string branchCode { get; set; }
             public string AccountClass { get; set; }
+            public string classCode { get; set; }
             public string Comment { get; set; }
         }
 
@@ -90,6 +92,8 @@ namespace NBE.Controls
                         accGrdRow.customerName = item.CustomerName;
                         accGrdRow.AccountClass = ClassLookup[item.classcode].ClassDescription;
                         accGrdRow.initialAmount = item.amount;
+                        accGrdRow.branchCode = item.branch;
+                        accGrdRow.classCode= item.classcode;
                         AccountGridList.Add(accGrdRow);
                     }
                 }
@@ -116,16 +120,35 @@ namespace NBE.Controls
             if (e.Row.RowType == DataControlRowType.DataRow && (e.Row.RowState & DataControlRowState.Edit) > 0) 
             {
                 DropDownList ddl_currency = (DropDownList)e.Row.FindControl("ddl_currency");
+                DropDownList ddl_branch = (DropDownList)e.Row.FindControl("ddl_branch");
+                DropDownList ddl_class = (DropDownList)e.Row.FindControl("ddl_class");
+                
                 //HiddenField hf = (HiddenField)e.Row.FindControl("hf_currency");
 
+                AccountGridRow row = (AccountGridRow)e.Row.DataItem;
                 if(ddl_currency != null)
                 {
                     ddl_currency.DataSource = CurrencyLookup.Values;
                     ddl_currency.DataTextField = "currencyCode";
                     ddl_currency.DataValueField = "currencyID";
                     ddl_currency.DataBind();
-                    AccountGridRow row = (AccountGridRow)e.Row.DataItem;
                     ddl_currency.SelectedValue = row.currencyID.ToString();
+                }
+                if (ddl_branch != null) 
+                { 
+                    ddl_branch.DataSource = BranchLookup.Values;
+                    ddl_branch.DataTextField = "branch";
+                    ddl_branch.DataValueField = "flexCode";
+                    ddl_branch.DataBind();
+                    ddl_currency.SelectedValue = row.branchCode.ToString();
+                }
+                if(ddl_class != null)
+                {
+                    ddl_class.DataSource = ClassLookup.Values;
+                    ddl_class.DataTextField = "ClassDescription";
+                    ddl_class.DataValueField = "code";
+                    ddl_class.DataBind();
+                    ddl_class.SelectedValue = row.classCode.ToString();
                 }
             }
         }
@@ -140,20 +163,28 @@ namespace NBE.Controls
             {
                 using (mini_bankEntities db = new mini_bankEntities())
                 {
-                    #region taking input form the row to the data object (missing branch and class)
+                    #region taking input form the row to the data object
                     ACCOUNT update = db.ACCOUNTS.Where(acc => acc.AccID == AccID).Single();
                     TextBox txt_custName = (TextBox)row.FindControl("txt_name");
                     DropDownList ddl_curr = (DropDownList)row.FindControl("ddl_currency");
                     TextBox txt_amount = (TextBox)row.FindControl("txt_amount");
-                    TextBox txt_branch = (TextBox)row.FindControl("txt_branch");
-                    TextBox txt_class = (TextBox)row.FindControl("txt_class");
+                    //TextBox txt_branch = (TextBox)row.FindControl("txt_branch");
+                    //TextBox txt_class = (TextBox)row.FindControl("txt_class");
                     TextBox txt_comment = (TextBox)row.FindControl("txt_commentEdited");
+                    DropDownList ddl_branch = (DropDownList)row.FindControl("ddl_branch");
+                    DropDownList ddl_class = (DropDownList)row.FindControl("ddl_class");
                     update.CustomerName = txt_custName.Text;
                     update.currency = Convert.ToInt32(ddl_curr.SelectedValue);
                     update.amount = Convert.ToInt32(txt_amount.Text);
-                    //update.branch = ddl_branch.SelectedValue.ToString();
-                    //update.class = ddl_class.selectedValue.ToString();
+                    update.branch = ddl_branch.SelectedValue.ToString();
+                    update.classcode = ddl_class.SelectedValue.ToString();
                     update.Comment = txt_comment.Text;
+                    string oldAccountNumber = update.AccountNumber.ToString();
+                    string CIF = oldAccountNumber.Substring(6, 8);
+                    update.AccountNumber = update.branch.ToString() + update.classcode.ToString() + CIF + update.uniqueIdentifier.ToString();
+                    update.status = 5;
+                    update.MakerName = Session["uname"].ToString();
+                    update.MakerID = Convert.ToInt32(Session["ID"]);
                     #endregion
 
                     db.SaveChanges();
