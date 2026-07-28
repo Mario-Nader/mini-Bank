@@ -102,6 +102,9 @@ namespace NBE.Controls
             var connectionFromConfiguration = WebConfigurationManager.ConnectionStrings["DBconnection"].ConnectionString;
             using (SqlConnection DBconnection = new SqlConnection(connectionFromConfiguration))
             {
+                //using(mini_bankEntities )
+
+
                 try
                 {
 
@@ -128,7 +131,9 @@ namespace NBE.Controls
                     {
                         if (e.CommandName == "approveRow")
                         {
-                            String query = String.Format("update CUSTOMERS set status = 2 where custID = {0},checkerID = {1}, checkerName = '{2}'", custID,Convert.ToInt32(Session["ID"]), Session["uname"].ToString());
+                            int checkerID = Convert.ToInt32(Session["ID"]);
+                            string checkerName = Session["uname"].ToString();
+                            String query = String.Format("update CUSTOMERS set status = 2 ,checkerID = {1}, checkerName = '{2}' where custID = {0}", custID,checkerID, checkerName);
                             SqlCommand cmd = new SqlCommand(query, DBconnection);
                             cmd.ExecuteNonQuery();
                             String getCustQuery = String.Format("select * from CUSTOMERS where custID = {0}", custID);

@@ -7,29 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NBE
+namespace NBE.Controls
 {
 
 
-    public partial class ValidateAccounts
+    public partial class CTRL_CheckerMenu
     {
 
         /// <summary>
-        /// CTRL_CheckerMenu1 control.
+        /// link_AccReq control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NBE.Controls.CTRL_CheckerMenu CTRL_CheckerMenu1;
+        protected global::System.Web.UI.WebControls.HyperLink link_AccReq;
 
         /// <summary>
-        /// CTRL_ValidateAccounts1 control.
+        /// link_CustReq control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NBE.Controls.CTRL_ValidateAccounts CTRL_ValidateAccounts1;
+        protected global::System.Web.UI.WebControls.HyperLink link_CustReq;
     }
 }

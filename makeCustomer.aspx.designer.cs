@@ -22,5 +22,14 @@ namespace NBE
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::NBE.Controls.CreateCustomer CTRL_CreateCustomer1;
+
+        /// <summary>
+        /// MakerMenu1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NBE.Controls.MakerMenu MakerMenu1;
     }
 }

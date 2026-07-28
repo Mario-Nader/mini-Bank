@@ -11,79 +11,61 @@ namespace NBE.Controls
 {
 
 
-    public partial class CTRL_WithdrawMoney
+    public partial class MakerMenu
     {
 
         /// <summary>
-        /// lbl_nationalID control.
+        /// link_createAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_nationalID;
+        protected global::System.Web.UI.WebControls.HyperLink link_createAccount;
 
         /// <summary>
-        /// txt_nationalID control.
+        /// link_createCustomer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_nationalID;
+        protected global::System.Web.UI.WebControls.HyperLink link_createCustomer;
 
         /// <summary>
-        /// lbl_accountNumber control.
+        /// link_withdraw control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_accountNumber;
+        protected global::System.Web.UI.WebControls.HyperLink link_withdraw;
 
         /// <summary>
-        /// txt_AccountNumber control.
+        /// link_deposite control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_AccountNumber;
+        protected global::System.Web.UI.WebControls.HyperLink link_deposite;
 
         /// <summary>
-        /// lbl_amount control.
+        /// link_EditedAccounts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_amount;
+        protected global::System.Web.UI.WebControls.HyperLink link_EditedAccounts;
 
         /// <summary>
-        /// txt_amount control.
+        /// link_CustEdit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_amount;
-
-        /// <summary>
-        /// btn_submit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_submit;
-
-        /// <summary>
-        /// lit_status control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal lit_status;
+        protected global::System.Web.UI.WebControls.HyperLink link_CustEdit;
     }
 }

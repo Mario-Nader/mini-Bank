@@ -6,7 +6,7 @@
     </Key>
     <Property Name="AccID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="customerID" Type="int" />
-    <Property Name="classcode" Type="nvarchar" MaxLength="20" />
+    <Property Name="classcode" Type="nvarchar" MaxLength="3" />
     <Property Name="currency" Type="int" />
     <Property Name="dateCreated" Type="date" />
     <Property Name="status" Type="int" />
@@ -14,6 +14,12 @@
     <Property Name="MakerID" Type="int" Nullable="false" />
     <Property Name="CheckerID" Type="int" Nullable="false" />
     <Property Name="amount" Type="bigint" Nullable="false" />
+    <Property Name="AccountNumber" Type="nvarchar" MaxLength="19" Nullable="false" />
+    <Property Name="uniqueIdentifier" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar" MaxLength="50" />
+    <Property Name="MakerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CheckerName" Type="nvarchar" MaxLength="50" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="accounts_look_up">
     <Key>
@@ -56,7 +62,7 @@
     <Property Name="RateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FromCur" Type="varchar" MaxLength="5" Nullable="false" />
     <Property Name="ToCur" Type="varchar" MaxLength="5" Nullable="false" />
-    <Property Name="Rate" Type="int" Nullable="false" />
+    <Property Name="Rate" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="CUSTOMERS">
     <Key>

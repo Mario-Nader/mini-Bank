@@ -17,6 +17,7 @@ namespace NBE.Controls
         public long initialAmount { get; set; }
         public string branch { get; set; }
         public string AccountClass {  get; set; }
+        public string Comment { get; set; }
     }
     public partial class CTRL_ValidateAccounts : System.Web.UI.UserControl
     {
@@ -31,10 +32,10 @@ namespace NBE.Controls
         protected void Page_Load(object sender, EventArgs e)
         {
             verifyUser();
-            bindData();
+            
             if (!Page.IsPostBack)
             {
-
+                bindData();
             }
         }
 
@@ -53,6 +54,7 @@ namespace NBE.Controls
                             from b in acb
                             join cl in db.accounts_look_up on acc.classcode equals cl.code into acbcl
                             from r in acbcl
+                            where acc.status == 1 || acc.status == 5
                             select new AccountGridRow
                             {
                                 accountID = acc.AccID,
@@ -62,7 +64,8 @@ namespace NBE.Controls
                                 currency = a.currencyCode,
                                 initialAmount = acc.amount,
                                 branch = b.branch,
-                                AccountClass = r.ClassDescription
+                                AccountClass = r.ClassDescription,
+                                Comment = acc.Comment
                             };
                 #endregion
 
@@ -110,17 +113,16 @@ namespace NBE.Controls
                     }
                     else
                     {
-                        ACCOUNT update = new ACCOUNT();
-                        update.AccID = AccID;
-                        db.ACCOUNTS.Attach(update);
+                        ACCOUNT update = db.ACCOUNTS.Where(a => a.AccID == AccID).Select(a => a).Single();
                         if (e.CommandName == "approveRow")
                         {
-                            update.status = 2;
-
+                            //var query = db.ACCOUNTS;
+                            db.Entry(update).Property(a=>a.status).IsModified = true;
                         }
                         else if (e.CommandName == "rejectRow")
                         {
                             update.status = 3;
+                            //db.Entry(update).Property(a => a.status).IsModified = true;
 
                         }
                         else if (e.CommandName == "requestEditRow")
@@ -134,13 +136,28 @@ namespace NBE.Controls
                                 comment = TXTcomment.Text;
                             }
                             update.Comment = comment;
+                            //db.Entry(update).Property(a => a.status).IsModified = true;
+                            //db.Entry(update).Property(a => a.Comment).IsModified = true;
                         }
+                        update.CheckerName = Session["uname"].ToString();
+                        update.CheckerID = Convert.ToInt32(Session["ID"]);
                         db.SaveChanges();
+                        bindData();
                     }
                     #endregion
                 }
             }
-            catch(Exception exp)
+            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+            {
+                foreach (var validationResult in ex.EntityValidationErrors)
+                {
+                    foreach (var err in validationResult.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Property :{err.PropertyName}, Error :{err.ErrorMessage}");
+                    }
+                }
+            }
+            catch (Exception exp)
             {
                 lit_status.Text = exp.Message;
             }

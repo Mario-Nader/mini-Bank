@@ -6,7 +6,7 @@
     </Key>
     <Property Name="AccID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="customerID" Type="Int32" />
-    <Property Name="classcode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="classcode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
     <Property Name="currency" Type="Int32" />
     <Property Name="dateCreated" Type="DateTime" Precision="0" />
     <Property Name="status" Type="Int32" />
@@ -16,6 +16,12 @@
     <Property Name="amount" Type="Int64" Nullable="false" />
     <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_ACCOUNTS_CUSTOMERS" FromRole="ACCOUNTS" ToRole="CUSTOMERS" />
     <NavigationProperty Name="log_accounts" Relationship="Self.FK_log_accounts_ACCOUNTS" FromRole="ACCOUNTS" ToRole="log_accounts" />
+    <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="true" />
+    <Property Name="uniqueIdentifier" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="Comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MakerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CheckerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="accounts_look_up">
     <Key>
@@ -50,15 +56,6 @@
     <Property Name="ToCurrencyID" Type="Int32" Nullable="false" />
     <Property Name="OldRate" Type="Int32" Nullable="false" />
     <Property Name="NewRate" Type="Int32" Nullable="false" />
-  </EntityType>
-  <EntityType Name="currency_rate_look_up">
-    <Key>
-      <PropertyRef Name="RateID" />
-    </Key>
-    <Property Name="RateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FromCur" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="ToCur" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Rate" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="CUSTOMER">
     <Key>
@@ -206,7 +203,6 @@
     <EntitySet Name="branches_look_up" EntityType="Self.branches_look_up" />
     <EntitySet Name="currency_look_up" EntityType="Self.currency_look_up" />
     <EntitySet Name="currency_rate_log" EntityType="Self.currency_rate_log" />
-    <EntitySet Name="currency_rate_look_up" EntityType="Self.currency_rate_look_up" />
     <EntitySet Name="CUSTOMERS" EntityType="Self.CUSTOMER" />
     <EntitySet Name="log_accounts" EntityType="Self.log_accounts" />
     <EntitySet Name="log_customers" EntityType="Self.log_customers" />
@@ -230,5 +226,15 @@
       <End Role="CUSTOMERS" EntitySet="CUSTOMERS" />
       <End Role="USERS" EntitySet="USERS" />
     </AssociationSet>
+    <EntitySet Name="currency_rate_look_up" EntityType="mini_bankModel.currency_rate_look_up" />
   </EntityContainer>
+  <EntityType Name="currency_rate_look_up">
+    <Key>
+      <PropertyRef Name="RateID" />
+    </Key>
+    <Property Name="RateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FromCur" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="ToCur" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="Rate" Type="Double" Nullable="false" />
+  </EntityType>
 </Schema>

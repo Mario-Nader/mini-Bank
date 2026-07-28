@@ -10,7 +10,6 @@
         <EntityTypeShape EntityType="mini_bankModel.branches_look_up" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="mini_bankModel.currency_look_up" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="mini_bankModel.currency_rate_log" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="mini_bankModel.currency_rate_look_up" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="mini_bankModel.CUSTOMER" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="mini_bankModel.log_accounts" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="mini_bankModel.log_customers" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
@@ -22,6 +21,7 @@
         <AssociationConnector Association="mini_bankModel.FK_log_accounts_ACCOUNTS" ManuallyRouted="false" />
         <AssociationConnector Association="mini_bankModel.FK_log_customers_CUSTOMERS" ManuallyRouted="false" />
         <AssociationConnector Association="mini_bankModel.FK_USERS_CUSTOMERS" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="mini_bankModel.currency_rate_look_up" Width="1.5" PointX="8.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

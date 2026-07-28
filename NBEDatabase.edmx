@@ -4,14 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="mini_bankModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="mini_bankModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ACCOUNTS">
           <Key>
             <PropertyRef Name="AccID" />
           </Key>
           <Property Name="AccID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="customerID" Type="int" />
-          <Property Name="classcode" Type="nvarchar" MaxLength="20" />
+          <Property Name="classcode" Type="nvarchar" MaxLength="3" />
           <Property Name="currency" Type="int" />
           <Property Name="dateCreated" Type="date" />
           <Property Name="status" Type="int" />
@@ -19,6 +19,12 @@
           <Property Name="MakerID" Type="int" Nullable="false" />
           <Property Name="CheckerID" Type="int" Nullable="false" />
           <Property Name="amount" Type="bigint" Nullable="false" />
+          <Property Name="AccountNumber" Type="nvarchar" MaxLength="19" Nullable="false" />
+          <Property Name="uniqueIdentifier" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="50" />
+          <Property Name="MakerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CheckerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="accounts_look_up">
           <Key>
@@ -61,7 +67,7 @@
           <Property Name="RateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FromCur" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="ToCur" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="Rate" Type="int" Nullable="false" />
+          <Property Name="Rate" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="CUSTOMERS">
           <Key>
@@ -228,8 +234,7 @@
             <End Role="USERS" EntitySet="USERS" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="mini_bankModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -239,7 +244,7 @@
           </Key>
           <Property Name="AccID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="customerID" Type="Int32" />
-          <Property Name="classcode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="classcode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="currency" Type="Int32" />
           <Property Name="dateCreated" Type="DateTime" Precision="0" />
           <Property Name="status" Type="Int32" />
@@ -249,6 +254,12 @@
           <Property Name="amount" Type="Int64" Nullable="false" />
           <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_ACCOUNTS_CUSTOMERS" FromRole="ACCOUNTS" ToRole="CUSTOMERS" />
           <NavigationProperty Name="log_accounts" Relationship="Self.FK_log_accounts_ACCOUNTS" FromRole="ACCOUNTS" ToRole="log_accounts" />
+          <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="true" />
+          <Property Name="uniqueIdentifier" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MakerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CheckerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="accounts_look_up">
           <Key>
@@ -283,15 +294,6 @@
           <Property Name="ToCurrencyID" Type="Int32" Nullable="false" />
           <Property Name="OldRate" Type="Int32" Nullable="false" />
           <Property Name="NewRate" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="currency_rate_look_up">
-          <Key>
-            <PropertyRef Name="RateID" />
-          </Key>
-          <Property Name="RateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FromCur" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ToCur" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Rate" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="CUSTOMER">
           <Key>
@@ -439,7 +441,6 @@
           <EntitySet Name="branches_look_up" EntityType="Self.branches_look_up" />
           <EntitySet Name="currency_look_up" EntityType="Self.currency_look_up" />
           <EntitySet Name="currency_rate_log" EntityType="Self.currency_rate_log" />
-          <EntitySet Name="currency_rate_look_up" EntityType="Self.currency_rate_look_up" />
           <EntitySet Name="CUSTOMERS" EntityType="Self.CUSTOMER" />
           <EntitySet Name="log_accounts" EntityType="Self.log_accounts" />
           <EntitySet Name="log_customers" EntityType="Self.log_customers" />
@@ -463,7 +464,17 @@
             <End Role="CUSTOMERS" EntitySet="CUSTOMERS" />
             <End Role="USERS" EntitySet="USERS" />
           </AssociationSet>
+          <EntitySet Name="currency_rate_look_up" EntityType="mini_bankModel.currency_rate_look_up" />
         </EntityContainer>
+        <EntityType Name="currency_rate_look_up">
+          <Key>
+            <PropertyRef Name="RateID" />
+          </Key>
+          <Property Name="RateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FromCur" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="ToCur" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Rate" Type="Double" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -473,6 +484,12 @@
           <EntitySetMapping Name="ACCOUNTS">
             <EntityTypeMapping TypeName="mini_bankModel.ACCOUNT">
               <MappingFragment StoreEntitySet="ACCOUNTS">
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CheckerName" ColumnName="CheckerName" />
+                <ScalarProperty Name="MakerName" ColumnName="MakerName" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="uniqueIdentifier" ColumnName="uniqueIdentifier" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
                 <ScalarProperty Name="AccID" ColumnName="AccID" />
                 <ScalarProperty Name="customerID" ColumnName="customerID" />
                 <ScalarProperty Name="classcode" ColumnName="classcode" />
@@ -521,16 +538,6 @@
                 <ScalarProperty Name="ToCurrencyID" ColumnName="ToCurrencyID" />
                 <ScalarProperty Name="OldRate" ColumnName="OldRate" />
                 <ScalarProperty Name="NewRate" ColumnName="NewRate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="currency_rate_look_up">
-            <EntityTypeMapping TypeName="mini_bankModel.currency_rate_look_up">
-              <MappingFragment StoreEntitySet="currency_rate_look_up">
-                <ScalarProperty Name="RateID" ColumnName="RateID" />
-                <ScalarProperty Name="FromCur" ColumnName="FromCur" />
-                <ScalarProperty Name="ToCur" ColumnName="ToCur" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -624,6 +631,16 @@
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="currency_rate_look_up">
+            <EntityTypeMapping TypeName="mini_bankModel.currency_rate_look_up">
+              <MappingFragment StoreEntitySet="currency_rate_look_up">
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="ToCur" ColumnName="ToCur" />
+                <ScalarProperty Name="FromCur" ColumnName="FromCur" />
+                <ScalarProperty Name="RateID" ColumnName="RateID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

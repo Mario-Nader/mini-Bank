@@ -15,6 +15,15 @@ namespace NBE
     {
 
         /// <summary>
+        /// MakerMenu1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NBE.Controls.MakerMenu MakerMenu1;
+
+        /// <summary>
         /// CTRL_addAccount1 control.
         /// </summary>
         /// <remarks>

@@ -11,25 +11,25 @@ namespace NBE
 {
 
 
-    public partial class ValidateAccounts
+    public partial class EditCustomers
     {
 
         /// <summary>
-        /// CTRL_CheckerMenu1 control.
+        /// MakerMenu1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NBE.Controls.CTRL_CheckerMenu CTRL_CheckerMenu1;
+        protected global::NBE.Controls.MakerMenu MakerMenu1;
 
         /// <summary>
-        /// CTRL_ValidateAccounts1 control.
+        /// CTRL_EditCustomers1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NBE.Controls.CTRL_ValidateAccounts CTRL_ValidateAccounts1;
+        protected global::NBE.Controls.CTRL_EditCustomers CTRL_EditCustomers1;
     }
 }

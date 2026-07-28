@@ -46,7 +46,7 @@ namespace NBE.Controls
                     DBconnection.Close();
                     DBconnection.Dispose();
                 }
-                Response.Redirect("~/Home.aspx");
+                Response.Redirect("TransfereMoney.aspx");
             }
             catch (Exception exp)
             {

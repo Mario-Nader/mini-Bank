@@ -100,14 +100,21 @@
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.js" />
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.min.js" />
     <Content Include="Controls\ChangePassword.ascx" />
+    <Content Include="Controls\CTRL_accountEdit.ascx" />
     <Content Include="Controls\CTRL_addAccount.ascx" />
+    <Content Include="Controls\CTRL_CheckerMenu.ascx" />
     <Content Include="Controls\CTRL_CreateCustomer.ascx" />
+    <Content Include="Controls\CTRL_EditAccounts.ascx" />
+    <Content Include="Controls\CTRL_EditCustomers.ascx" />
     <Content Include="Controls\CTRL_transfereMoney.ascx" />
     <Content Include="Controls\CTRL_ValidateAccounts.ascx" />
     <Content Include="Controls\CTRL_validateCustomer.ascx" />
     <Content Include="Controls\CTRL_WithdrawMoney.ascx" />
     <Content Include="Controls\CTRL_DepositeMoney.ascx" />
+    <Content Include="Controls\MakerMenu.ascx" />
     <Content Include="DepositMoney.aspx" />
+    <Content Include="EditAccounts.aspx" />
+    <Content Include="EditCustomers.aspx" />
     <Content Include="WithdrawMoney.aspx" />
     <Content Include="createAccount.aspx" />
     <Content Include="CustomerChangePassword.aspx" />
@@ -182,6 +189,13 @@
     <Compile Include="Controls\ChangePassword.ascx.designer.cs">
       <DependentUpon>ChangePassword.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CTRL_accountEdit.ascx.cs">
+      <DependentUpon>CTRL_accountEdit.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CTRL_accountEdit.ascx.designer.cs">
+      <DependentUpon>CTRL_accountEdit.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CTRL_addAccount.ascx.cs">
       <DependentUpon>CTRL_addAccount.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -189,12 +203,33 @@
     <Compile Include="Controls\CTRL_addAccount.ascx.designer.cs">
       <DependentUpon>CTRL_addAccount.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CTRL_CheckerMenu.ascx.cs">
+      <DependentUpon>CTRL_CheckerMenu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CTRL_CheckerMenu.ascx.designer.cs">
+      <DependentUpon>CTRL_CheckerMenu.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CTRL_CreateCustomer.ascx.cs">
       <DependentUpon>CTRL_CreateCustomer.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controls\CTRL_CreateCustomer.ascx.designer.cs">
       <DependentUpon>CTRL_CreateCustomer.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CTRL_EditAccounts.ascx.cs">
+      <DependentUpon>CTRL_EditAccounts.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CTRL_EditAccounts.ascx.designer.cs">
+      <DependentUpon>CTRL_EditAccounts.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CTRL_EditCustomers.ascx.cs">
+      <DependentUpon>CTRL_EditCustomers.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\CTRL_EditCustomers.ascx.designer.cs">
+      <DependentUpon>CTRL_EditCustomers.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\CTRL_transfereMoney.ascx.cs">
       <DependentUpon>CTRL_transfereMoney.ascx</DependentUpon>
@@ -230,12 +265,33 @@
     <Compile Include="Controls\CTRL_DepositeMoney.ascx.designer.cs">
       <DependentUpon>CTRL_DepositeMoney.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MakerMenu.ascx.cs">
+      <DependentUpon>MakerMenu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\MakerMenu.ascx.designer.cs">
+      <DependentUpon>MakerMenu.ascx</DependentUpon>
+    </Compile>
     <Compile Include="DepositMoney.aspx.cs">
       <DependentUpon>DepositMoney.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DepositMoney.aspx.designer.cs">
       <DependentUpon>DepositMoney.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditAccounts.aspx.cs">
+      <DependentUpon>EditAccounts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditAccounts.aspx.designer.cs">
+      <DependentUpon>EditAccounts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditCustomers.aspx.cs">
+      <DependentUpon>EditCustomers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditCustomers.aspx.designer.cs">
+      <DependentUpon>EditCustomers.aspx</DependentUpon>
     </Compile>
     <Compile Include="WithdrawMoney.aspx.cs">
       <DependentUpon>WithdrawMoney.aspx</DependentUpon>

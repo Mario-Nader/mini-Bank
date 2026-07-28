@@ -30,7 +30,6 @@ namespace NBE
         public virtual DbSet<branches_look_up> branches_look_up { get; set; }
         public virtual DbSet<currency_look_up> currency_look_up { get; set; }
         public virtual DbSet<currency_rate_log> currency_rate_log { get; set; }
-        public virtual DbSet<currency_rate_look_up> currency_rate_look_up { get; set; }
         public virtual DbSet<CUSTOMER> CUSTOMERS { get; set; }
         public virtual DbSet<log_accounts> log_accounts { get; set; }
         public virtual DbSet<log_customers> log_customers { get; set; }
@@ -38,5 +37,6 @@ namespace NBE
         public virtual DbSet<status_look_up> status_look_up { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<USER> USERS { get; set; }
+        public virtual DbSet<currency_rate_look_up> currency_rate_look_up { get; set; }
     }
 }

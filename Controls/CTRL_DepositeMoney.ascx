@@ -21,17 +21,24 @@
             <asp:TextBox ID="txt_AccountNumber" runat="server"></asp:TextBox>
         </td>
         <td class="auto-style4">Amount :
-            <input id="txt_Amount" type="text" /></td>
-    </tr>
-    <tr>
-        <td class="auto-style2">&nbsp;</td>
-        <td>&nbsp;</td>
+            <asp:TextBox ID="txt_amount" runat="server"></asp:TextBox>
+        </td>
     </tr>
     <tr>
         <td class="auto-style2">
-            <asp:Button ID="Button1" runat="server" Text="Deposite" />
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txt_AccountNumber" ErrorMessage="please enter the account number"></asp:RequiredFieldValidator>
         </td>
-        <td>&nbsp;</td>
+        <td>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txt_amount" ErrorMessage="please enter the amount"></asp:RequiredFieldValidator>
+        </td>
+    </tr>
+    <tr>
+        <td class="auto-style2">
+            <asp:Button ID="Button1" runat="server" Text="Deposite" OnClick="Button1_Click" />
+        </td>
+        <td>
+            <asp:Literal ID="lit_status" runat="server"></asp:Literal>
+        </td>
     </tr>
 </table>
 

@@ -11,7 +11,7 @@ namespace NBE
 {
     using System;
     using System.Collections.Generic;
-    using System.Drawing.Printing;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class ACCOUNT
     {
@@ -25,6 +25,8 @@ namespace NBE
         public Nullable<int> customerID { get; set; }
         public string classcode { get; set; }
         public Nullable<int> currency { get; set; }
+
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public Nullable<System.DateTime> dateCreated { get; set; }
         public Nullable<int> status { get; set; }
         public string branch { get; set; }
@@ -32,11 +34,12 @@ namespace NBE
         public int CheckerID { get; set; }
         public long amount { get; set; }
         public string AccountNumber { get; set; }
-        public string uniqueIdentifier {  get; set; }
-        public string Comment {  get; set; }
-        public string MakerName {  get; set; }
+        public string uniqueIdentifier { get; set; }
+        public string Comment { get; set; }
+        public string MakerName { get; set; }
         public string CheckerName { get; set; }
         public string CustomerName { get; set; }
+    
         public virtual CUSTOMER CUSTOMER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<log_accounts> log_accounts { get; set; }

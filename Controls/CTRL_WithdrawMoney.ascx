@@ -29,15 +29,17 @@
     <tr>
         <td class="auto-style2">
             <asp:Label ID="lbl_amount" runat="server" Text="amount  "></asp:Label>
-            <asp:TextBox ID="amount" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txt_amount" runat="server"></asp:TextBox>
         </td>
         <td>&nbsp;</td>
     </tr>
     <tr>
         <td class="auto-style2">
-            <asp:Button ID="btn_submit" runat="server" Text="Withdraw" />
+            <asp:Button ID="btn_submit" runat="server" Text="Withdraw" OnClick="btn_submit_Click" />
         </td>
-        <td>&nbsp;</td>
+        <td>
+            <asp:Literal ID="lit_status" runat="server"></asp:Literal>
+        </td>
     </tr>
 </table>
 
