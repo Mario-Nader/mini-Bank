@@ -39,6 +39,7 @@ namespace NBE.Controls
                                        where acc.customerID == customerID
                                        select acc.AccountNumber;
                     List<string> accountNumbers = accountQuery.ToList();
+                    ddl_srcAccount.Items.Add(new ListItem("please select an account", ""));
                     for (int i = 0; i < accountNumbers.Count(); i++)
                     {
                         ddl_srcAccount.Items.Add(accountNumbers[i]);
@@ -53,12 +54,21 @@ namespace NBE.Controls
             #region filling the data of the new selected index
             using (mini_bankEntities db = new mini_bankEntities()) {
                     string accountNumber = ddl_srcAccount.Text;
-                ACCOUNT account = db.ACCOUNTS
-                            .Where(a => a.AccountNumber == accountNumber)
-                            .Select(a => a)
-                            .Single();
+                if (accountNumber.Length > 0)
+                {
+                    ACCOUNT account = db.ACCOUNTS
+                                .Where(a => a.AccountNumber == accountNumber)
+                                .Select(a => a)
+                                .Single();
                 txt_balance.Text = account.amount.ToString();
-                txt_srcCurr.Text = CurrencyLookup[Convert.ToInt32(account.currency)].ToString();
+                txt_srcCurr.Text = CurrencyLookup[Convert.ToInt32(account.currency)].currencyCode.ToString();
+                }
+                else
+                {
+                    txt_balance.Text = "";
+                    txt_srcCurr.Text = "";
+                    lit_state.Text = "please enter the accounts";
+                }
 
             }
             #endregion
@@ -87,19 +97,21 @@ namespace NBE.Controls
 
                 else
                 {
+                    lit_state.Text = "";
                     #region making the transaction, handling exchange rates and attaching accounts to database
                     if (srcAcc.amount <= Convert.ToInt32(txt_amount.Text))
                     {
                         lit_state.Text = "insufficient balance please enter a valid amount to transfere ";
                     }
                     else
-                    {
-                        ACCOUNT distUpdate = new ACCOUNT();
-                        ACCOUNT srcUpdate = new ACCOUNT();
-                        if (txt_srcCurr.Text == txt_distCurr.Text) {
+                    //{
+                    //    ACCOUNT distUpdate = new ACCOUNT();
+                    //    ACCOUNT srcUpdate = new ACCOUNT();
+                        if (txt_srcCurr.Text == txt_distCurr.Text)
+                        {
                             #region same currency logic
-                            srcUpdate.amount = srcAcc.amount - Convert.ToInt32(txt_amount.Text);
-                            distUpdate.amount = distAccount.amount + Convert.ToInt32(txt_amount.Text);
+                            srcAcc.amount = srcAcc.amount - Convert.ToInt32(txt_amount.Text);
+                            distAccount.amount = distAccount.amount + Convert.ToInt32(txt_amount.Text);
                             #endregion
                         }
                         else
@@ -107,10 +119,10 @@ namespace NBE.Controls
                             #region currency exchange Rate handling
                             double srcToEGP = 1.0;
                             double EGPToDist = 1.0;
-                            if(txt_srcCurr.Text != "EGP")
+                            if (txt_srcCurr.Text != "EGP")
                             {
                                 srcToEGP = db.currency_rate_look_up
-                                    .Where(rate => rate.FromCur ==Convert.ToString(txt_srcCurr.Text) && rate.ToCur == "EGP")
+                                    .Where(rate => rate.FromCur == Convert.ToString(txt_srcCurr.Text) && rate.ToCur == "EGP")
                                     .Select(rate => rate.Rate)
                                     .Single();
                             }
@@ -121,19 +133,19 @@ namespace NBE.Controls
                                     .Select(rate => rate.Rate)
                                     .Single();
                             }
-                            srcUpdate.amount = srcAcc.amount - Convert.ToInt32(txt_amount.Text);
+                            srcAcc.amount = srcAcc.amount - Convert.ToInt32(txt_amount.Text);
                             double intermediateAmount = Convert.ToInt32(txt_amount.Text) * srcToEGP;
                             intermediateAmount = intermediateAmount * EGPToDist;
-                            distUpdate.amount = distAccount.amount + (long)intermediateAmount;// this may cause lose of less than 1 of the recipient currency
+                            distAccount.amount = distAccount.amount + (long)intermediateAmount;// this may cause lose of less than 1 of the recipient currency
                             #endregion
                         }
 
                         #region saving to the database
-                        srcUpdate.AccID = srcAcc.AccID;
-                        txt_balance.Text = Convert.ToString(srcUpdate.amount);
-                        distUpdate.AccID = distAccount.AccID;
-                        db.ACCOUNTS.Attach(srcUpdate);
-                        db.ACCOUNTS.Attach(distUpdate);
+                        //srcUpdate.AccID = srcAcc.AccID;
+                        txt_balance.Text = Convert.ToString(srcAcc.amount);
+                        //distAccount.AccID = distAccount.AccID;
+                        //db.ACCOUNTS.Attach(srcUpdate);
+                        //db.ACCOUNTS.Attach(distUpdate);
                         db.SaveChanges();
                         #endregion
                     }
@@ -149,7 +161,7 @@ namespace NBE.Controls
                 txt_ownerName.Text = "";
                 #endregion
             }
-        }
+        
 
         protected void check_distAcc_Click(object sender, EventArgs e)
         {
@@ -162,11 +174,12 @@ namespace NBE.Controls
                                       select acc).Single() ;
                 #endregion
 
-                if (distAccount != null) {
+                if (distAccount == null) {
                     lit_state.Text = "there is no account of that number";
                 }
                 else
                 {
+                    lit_state.Text = "";
                     #region getting the data and filling the textboxes
                     int custid =Convert.ToInt32(distAccount.customerID);
                     string ownerName = db.CUSTOMERS

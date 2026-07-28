@@ -34,10 +34,11 @@ namespace NBE.Controls
                     }
                     else
                     {
-                        ACCOUNT update = new ACCOUNT();
-                        update.amount += Convert.ToInt32(txt_amount.Text);
-                        update.AccID = account.AccID;
-                        db.ACCOUNTS.Attach(update);
+                        //ACCOUNT update = new ACCOUNT();
+                        //update.amount += Convert.ToInt32(txt_amount.Text);
+                        //update.AccID = account.AccID;
+                        //db.ACCOUNTS.Attach(update);
+                        account.amount += Convert.ToInt32(txt_amount.Text);
                         db.SaveChanges();
                         txt_amount.Text = "";
                         txt_AccountNumber.Text = "";

@@ -33,6 +33,15 @@ namespace NBE.Controls
         protected global::System.Web.UI.WebControls.TextBox txt_nationalID;
 
         /// <summary>
+        /// rfv_NationalID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_NationalID;
+
+        /// <summary>
         /// lbl_accountNumber control.
         /// </summary>
         /// <remarks>
@@ -42,13 +51,13 @@ namespace NBE.Controls
         protected global::System.Web.UI.WebControls.Label lbl_accountNumber;
 
         /// <summary>
-        /// txt_AccountNumber control.
+        /// ddl_AccountNumbers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_AccountNumber;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_AccountNumbers;
 
         /// <summary>
         /// lbl_amount control.
@@ -69,6 +78,15 @@ namespace NBE.Controls
         protected global::System.Web.UI.WebControls.TextBox txt_amount;
 
         /// <summary>
+        /// rfv_AccountNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfv_AccountNumber;
+
+        /// <summary>
         /// btn_submit control.
         /// </summary>
         /// <remarks>
@@ -76,6 +94,15 @@ namespace NBE.Controls
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_submit;
+
+        /// <summary>
+        /// get_Accounts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button get_Accounts;
 
         /// <summary>
         /// lit_status control.
