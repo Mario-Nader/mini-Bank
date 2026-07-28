@@ -64,9 +64,11 @@ namespace NBE.Controls
             {
                 using (var db = new mini_bankEntities())
                 {
+                    
                     var query = from cust in db.CUSTOMERS
                                 where cust.CIF == txt_CIF.Text
                                 select cust;
+                    
                     CUSTOMER customer = query.Single();
                     if (customer == null)
                     {
@@ -88,6 +90,8 @@ namespace NBE.Controls
                         }
                         else
                         {
+                           
+
                             #region preparing the data that will be put in the record
                             String CIF = txt_CIF.Text;
                             int amount = Convert.ToInt32(txt_Amount.Text);
@@ -144,6 +148,7 @@ namespace NBE.Controls
                             #endregion
 
                             #region creating and adding an account
+                            
                             ACCOUNT newAccount = new ACCOUNT();
                             newAccount.AccountNumber = AccountNumber;
                             newAccount.uniqueIdentifier = uniqueIdentifier;
@@ -158,6 +163,17 @@ namespace NBE.Controls
                             newAccount.MakerName = Session["uname"].ToString();
                             newAccount.CustomerName = CustomerName;
                             db.ACCOUNTS.Add(newAccount);
+                            db.SaveChanges();
+                            int AccID = db.ACCOUNTS.Where(acc => acc.AccountNumber == AccountNumber).Select(acc => acc.AccID).Single();
+                            log_accounts log = new log_accounts();
+                            log.branchCode = BranchCode;
+                            log.status = 1;
+                            log.MakerName = Session["uname"].ToString();
+                            log.MakerID = Convert.ToInt32(Session["ID"]);
+                            log.custID = custID;
+                            log.AccID = AccID;
+                            log.Date = DateTime.Now;
+                            db.log_accounts.Add(log);
                             db.SaveChanges();
                             #endregion
 

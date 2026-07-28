@@ -20,12 +20,15 @@ namespace NBE.Controls
         protected void btn_submit_Click(object sender, EventArgs e)
         {
             using (mini_bankEntities db = new mini_bankEntities()) {
-
+                SingleSideTransactions_log log = new SingleSideTransactions_log();
                 string accountNumber = ddl_AccountNumbers.SelectedValue.ToString();
                 ACCOUNT account = db.ACCOUNTS
                                   .Where(acc => acc.AccountNumber == accountNumber)
                                   .Select(acc => acc)
                                   .Single();
+                log.AccountNumber = accountNumber;
+                log.amount = Convert.ToInt32(txt_amount.Text);
+                log.Deposite = false;
                 if (account != null) {
                     if (txt_amount.Text.Length == 0)
                     {
@@ -35,6 +38,7 @@ namespace NBE.Controls
                     {
                         if (account.amount >= Convert.ToInt32(txt_amount.Text))
                         {
+                            db.SingleSideTransactions_log.Add(log);
                             account.amount = account.amount - Convert.ToInt32(txt_amount.Text);
                             db.SaveChanges();
                         }

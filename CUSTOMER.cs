@@ -18,8 +18,8 @@ namespace NBE
         public CUSTOMER()
         {
             this.ACCOUNTS = new HashSet<ACCOUNT>();
-            this.log_customers = new HashSet<log_customers>();
             this.USERS = new HashSet<USER>();
+            this.log_customers = new HashSet<log_customers>();
         }
     
         public int custID { get; set; }
@@ -42,8 +42,8 @@ namespace NBE
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ACCOUNT> ACCOUNTS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<log_customers> log_customers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USER> USERS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<log_customers> log_customers { get; set; }
     }
 }

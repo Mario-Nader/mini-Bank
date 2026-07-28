@@ -11,8 +11,7 @@ namespace NBE
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class ACCOUNT
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,8 +24,6 @@ namespace NBE
         public Nullable<int> customerID { get; set; }
         public string classcode { get; set; }
         public Nullable<int> currency { get; set; }
-
-        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public Nullable<System.DateTime> dateCreated { get; set; }
         public Nullable<int> status { get; set; }
         public string branch { get; set; }

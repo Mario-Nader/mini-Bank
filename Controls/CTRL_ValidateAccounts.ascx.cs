@@ -114,19 +114,31 @@ namespace NBE.Controls
                     else
                     {
                         ACCOUNT update = db.ACCOUNTS.Where(a => a.AccID == AccID).Select(a => a).Single();
+                        log_accounts log = new log_accounts();
+                        log.AccID = update.AccID;
+                        log.custID = Convert.ToInt32(update.customerID);
+                        log.CheckerID = Convert.ToInt32(Session["ID"]);
+                        log.branchCode = update.branch;
+                        log.CheckerName = Session["uname"].ToString();
+                        log.Date = DateTime.Now;
                         if (e.CommandName == "approveRow")
                         {
                             //var query = db.ACCOUNTS;
-                            db.Entry(update).Property(a=>a.status).IsModified = true;
+                            //db.Entry(update).Property(a=>a.status).IsModified = true;
+                            log.status = 2;
+                            update.status = 2;
+                            
                         }
                         else if (e.CommandName == "rejectRow")
                         {
                             update.status = 3;
+                            log.status = 3;
                             //db.Entry(update).Property(a => a.status).IsModified = true;
 
                         }
                         else if (e.CommandName == "requestEditRow")
                         {
+                            log.status = 4;
                             update.status = 4;
                             GridViewRow row = (GridViewRow)gv_accounts.Rows[rowIndex];
                             TextBox TXTcomment = (TextBox)row.FindControl("txt_comment");
@@ -141,6 +153,7 @@ namespace NBE.Controls
                         }
                         update.CheckerName = Session["uname"].ToString();
                         update.CheckerID = Convert.ToInt32(Session["ID"]);
+                        db.log_accounts.Add(log);
                         db.SaveChanges();
                         bindData();
                     }

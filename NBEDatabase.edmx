@@ -13,7 +13,7 @@
           <Property Name="customerID" Type="int" />
           <Property Name="classcode" Type="nvarchar" MaxLength="3" />
           <Property Name="currency" Type="int" />
-          <Property Name="dateCreated" Type="date" />
+          <Property Name="dateCreated" Type="datetime" />
           <Property Name="status" Type="int" />
           <Property Name="branch" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="MakerID" Type="int" Nullable="false" />
@@ -96,14 +96,14 @@
           </Key>
           <Property Name="logID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="custID" Type="int" Nullable="false" />
-          <Property Name="MakerID" Type="int" Nullable="false" />
-          <Property Name="CheckerID" Type="int" Nullable="false" />
+          <Property Name="MakerID" Type="int" />
+          <Property Name="CheckerID" Type="int" />
           <Property Name="Date" Type="datetime" Nullable="false" />
           <Property Name="branchCode" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
+          <Property Name="MakerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CheckerName" Type="nvarchar" MaxLength="50" />
           <Property Name="AccID" Type="int" Nullable="false" />
-          <Property Name="MakerName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CheckerName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="log_customers">
           <Key>
@@ -111,13 +111,12 @@
           </Key>
           <Property Name="logID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="custID" Type="int" Nullable="false" />
-          <Property Name="MakerID" Type="int" Nullable="false" />
-          <Property Name="CheckerID" Type="int" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="branchCode" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="MakerID" Type="int" />
+          <Property Name="CheckerID" Type="int" />
+          <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="status" Type="int" Nullable="false" />
-          <Property Name="MakerName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CheckerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MakerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CheckerName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Role_look_up">
           <Key>
@@ -125,6 +124,17 @@
           </Key>
           <Property Name="RoleID" Type="int" Nullable="false" />
           <Property Name="Role" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SingleSideTransactions_log">
+          <Key>
+            <PropertyRef Name="transactionID" />
+          </Key>
+          <Property Name="transactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AccountNumber" Type="nvarchar" MaxLength="14" Nullable="false" />
+          <Property Name="amount" Type="bigint" Nullable="false" />
+          <Property Name="Deposite" Type="bit" Nullable="false" />
+          <Property Name="dateCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="status_look_up">
           <Key>
@@ -142,6 +152,24 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Transactions_log">
+          <Key>
+            <PropertyRef Name="transactionID" />
+          </Key>
+          <Property Name="transactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="senderName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="senderID" Type="int" Nullable="false" />
+          <Property Name="recieverName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="recieverID" Type="int" Nullable="false" />
+          <Property Name="srcAccountNumber" Type="nvarchar" MaxLength="19" Nullable="false" />
+          <Property Name="distAccountNumber" Type="nvarchar" MaxLength="19" Nullable="false" />
+          <Property Name="srcCurr" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="distCurr" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="amountInSrcCurr" Type="bigint" Nullable="false" />
+          <Property Name="amountInDistCurr" Type="bigint" Nullable="false" />
+          <Property Name="rateUsed" Type="float" Nullable="false" />
+          <Property Name="dateCreated" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="USERS">
           <Key>
@@ -214,8 +242,10 @@
           <EntitySet Name="log_accounts" EntityType="Self.log_accounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="log_customers" EntityType="Self.log_customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role_look_up" EntityType="Self.Role_look_up" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SingleSideTransactions_log" EntityType="Self.SingleSideTransactions_log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="status_look_up" EntityType="Self.status_look_up" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions_log" EntityType="Self.Transactions_log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ACCOUNTS_CUSTOMERS" Association="Self.FK_ACCOUNTS_CUSTOMERS">
             <End Role="CUSTOMERS" EntitySet="CUSTOMERS" />
@@ -246,20 +276,20 @@
           <Property Name="customerID" Type="Int32" />
           <Property Name="classcode" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="currency" Type="Int32" />
-          <Property Name="dateCreated" Type="DateTime" Precision="0" />
+          <Property Name="dateCreated" Type="DateTime" Precision="3" />
           <Property Name="status" Type="Int32" />
           <Property Name="branch" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="MakerID" Type="Int32" Nullable="false" />
           <Property Name="CheckerID" Type="Int32" Nullable="false" />
           <Property Name="amount" Type="Int64" Nullable="false" />
           <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_ACCOUNTS_CUSTOMERS" FromRole="ACCOUNTS" ToRole="CUSTOMERS" />
-          <NavigationProperty Name="log_accounts" Relationship="Self.FK_log_accounts_ACCOUNTS" FromRole="ACCOUNTS" ToRole="log_accounts" />
           <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="true" />
           <Property Name="uniqueIdentifier" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="Comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MakerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CheckerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="log_accounts" Relationship="mini_bankModel.FK_log_accounts_ACCOUNTS" FromRole="ACCOUNT" ToRole="log_accounts" />
         </EntityType>
         <EntityType Name="accounts_look_up">
           <Key>
@@ -316,39 +346,8 @@
           <Property Name="nationalID" Type="String" MaxLength="14" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="comments" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ACCOUNTS" Relationship="Self.FK_ACCOUNTS_CUSTOMERS" FromRole="CUSTOMERS" ToRole="ACCOUNTS" />
-          <NavigationProperty Name="log_customers" Relationship="Self.FK_log_customers_CUSTOMERS" FromRole="CUSTOMERS" ToRole="log_customers" />
           <NavigationProperty Name="USERS" Relationship="Self.FK_USERS_CUSTOMERS" FromRole="CUSTOMERS" ToRole="USERS" />
-        </EntityType>
-        <EntityType Name="log_accounts">
-          <Key>
-            <PropertyRef Name="logID" />
-          </Key>
-          <Property Name="logID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="custID" Type="Int32" Nullable="false" />
-          <Property Name="MakerID" Type="Int32" Nullable="false" />
-          <Property Name="CheckerID" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="branchCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="AccID" Type="Int32" Nullable="false" />
-          <Property Name="MakerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CheckerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="ACCOUNT" Relationship="Self.FK_log_accounts_ACCOUNTS" FromRole="log_accounts" ToRole="ACCOUNTS" />
-        </EntityType>
-        <EntityType Name="log_customers">
-          <Key>
-            <PropertyRef Name="logID" />
-          </Key>
-          <Property Name="logID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="custID" Type="Int32" Nullable="false" />
-          <Property Name="MakerID" Type="Int32" Nullable="false" />
-          <Property Name="CheckerID" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="branchCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="MakerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CheckerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="CUSTOMER" Relationship="Self.FK_log_customers_CUSTOMERS" FromRole="log_customers" ToRole="CUSTOMERS" />
+          <NavigationProperty Name="log_customers" Relationship="mini_bankModel.FK_log_customers_CUSTOMERS" FromRole="CUSTOMER" ToRole="log_customers" />
         </EntityType>
         <EntityType Name="Role_look_up">
           <Key>
@@ -399,30 +398,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_log_accounts_ACCOUNTS">
-          <End Role="ACCOUNTS" Type="Self.ACCOUNT" Multiplicity="1" />
-          <End Role="log_accounts" Type="Self.log_accounts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ACCOUNTS">
-              <PropertyRef Name="AccID" />
-            </Principal>
-            <Dependent Role="log_accounts">
-              <PropertyRef Name="AccID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_log_customers_CUSTOMERS">
-          <End Role="CUSTOMERS" Type="Self.CUSTOMER" Multiplicity="1" />
-          <End Role="log_customers" Type="Self.log_customers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CUSTOMERS">
-              <PropertyRef Name="custID" />
-            </Principal>
-            <Dependent Role="log_customers">
-              <PropertyRef Name="custID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_USERS_CUSTOMERS">
           <End Role="CUSTOMERS" Type="Self.CUSTOMER" Multiplicity="0..1" />
           <End Role="USERS" Type="Self.USER" Multiplicity="*" />
@@ -442,8 +417,6 @@
           <EntitySet Name="currency_look_up" EntityType="Self.currency_look_up" />
           <EntitySet Name="currency_rate_log" EntityType="Self.currency_rate_log" />
           <EntitySet Name="CUSTOMERS" EntityType="Self.CUSTOMER" />
-          <EntitySet Name="log_accounts" EntityType="Self.log_accounts" />
-          <EntitySet Name="log_customers" EntityType="Self.log_customers" />
           <EntitySet Name="Role_look_up" EntityType="Self.Role_look_up" />
           <EntitySet Name="status_look_up" EntityType="Self.status_look_up" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
@@ -452,19 +425,23 @@
             <End Role="CUSTOMERS" EntitySet="CUSTOMERS" />
             <End Role="ACCOUNTS" EntitySet="ACCOUNTS" />
           </AssociationSet>
-          <AssociationSet Name="FK_log_accounts_ACCOUNTS" Association="Self.FK_log_accounts_ACCOUNTS">
-            <End Role="ACCOUNTS" EntitySet="ACCOUNTS" />
-            <End Role="log_accounts" EntitySet="log_accounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_log_customers_CUSTOMERS" Association="Self.FK_log_customers_CUSTOMERS">
-            <End Role="CUSTOMERS" EntitySet="CUSTOMERS" />
-            <End Role="log_customers" EntitySet="log_customers" />
-          </AssociationSet>
           <AssociationSet Name="FK_USERS_CUSTOMERS" Association="Self.FK_USERS_CUSTOMERS">
             <End Role="CUSTOMERS" EntitySet="CUSTOMERS" />
             <End Role="USERS" EntitySet="USERS" />
           </AssociationSet>
           <EntitySet Name="currency_rate_look_up" EntityType="mini_bankModel.currency_rate_look_up" />
+          <EntitySet Name="SingleSideTransactions_log" EntityType="mini_bankModel.SingleSideTransactions_log" />
+          <EntitySet Name="Transactions_log" EntityType="mini_bankModel.Transactions_log" />
+          <EntitySet Name="log_accounts" EntityType="mini_bankModel.log_accounts" />
+          <AssociationSet Name="FK_log_accounts_ACCOUNTS" Association="mini_bankModel.FK_log_accounts_ACCOUNTS">
+            <End Role="ACCOUNT" EntitySet="ACCOUNTS" />
+            <End Role="log_accounts" EntitySet="log_accounts" />
+          </AssociationSet>
+          <EntitySet Name="log_customers" EntityType="mini_bankModel.log_customers" />
+          <AssociationSet Name="FK_log_customers_CUSTOMERS" Association="mini_bankModel.FK_log_customers_CUSTOMERS">
+            <End Role="CUSTOMER" EntitySet="CUSTOMERS" />
+            <End Role="log_customers" EntitySet="log_customers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="currency_rate_look_up">
           <Key>
@@ -475,6 +452,89 @@
           <Property Name="ToCur" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="Rate" Type="Double" Nullable="false" />
         </EntityType>
+        <EntityType Name="SingleSideTransactions_log">
+          <Key>
+            <PropertyRef Name="transactionID" />
+          </Key>
+          <Property Name="transactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountNumber" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="amount" Type="Int64" Nullable="false" />
+          <Property Name="Deposite" Type="Boolean" Nullable="false" />
+          <Property Name="dateCreated" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Transactions_log">
+          <Key>
+            <PropertyRef Name="transactionID" />
+          </Key>
+          <Property Name="transactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="senderName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="senderID" Type="Int32" Nullable="false" />
+          <Property Name="recieverName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="recieverID" Type="Int32" Nullable="false" />
+          <Property Name="srcAccountNumber" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="true" />
+          <Property Name="distAccountNumber" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="true" />
+          <Property Name="srcCurr" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="distCurr" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="amountInSrcCurr" Type="Int64" Nullable="false" />
+          <Property Name="amountInDistCurr" Type="Int64" Nullable="false" />
+          <Property Name="rateUsed" Type="Double" Nullable="false" />
+          <Property Name="dateCreated" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="log_accounts">
+          <Key>
+            <PropertyRef Name="logID" />
+          </Key>
+          <Property Name="logID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="custID" Type="Int32" Nullable="false" />
+          <Property Name="MakerID" Type="Int32" />
+          <Property Name="CheckerID" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="branchCode" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="MakerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CheckerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ACCOUNT" Relationship="mini_bankModel.FK_log_accounts_ACCOUNTS" FromRole="log_accounts" ToRole="ACCOUNT" />
+        </EntityType>
+        <Association Name="FK_log_accounts_ACCOUNTS">
+          <End Type="mini_bankModel.ACCOUNT" Role="ACCOUNT" Multiplicity="1" />
+          <End Type="mini_bankModel.log_accounts" Role="log_accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT">
+              <PropertyRef Name="AccID" />
+            </Principal>
+            <Dependent Role="log_accounts">
+              <PropertyRef Name="AccID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="log_customers">
+          <Key>
+            <PropertyRef Name="logID" />
+          </Key>
+          <Property Name="logID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="custID" Type="Int32" Nullable="false" />
+          <Property Name="MakerID" Type="Int32" />
+          <Property Name="CheckerID" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="MakerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CheckerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CUSTOMER" Relationship="mini_bankModel.FK_log_customers_CUSTOMERS" FromRole="log_customers" ToRole="CUSTOMER" />
+        </EntityType>
+        <Association Name="FK_log_customers_CUSTOMERS">
+          <End Type="mini_bankModel.CUSTOMER" Role="CUSTOMER" Multiplicity="1" />
+          <End Type="mini_bankModel.log_customers" Role="log_customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="custID" />
+            </Principal>
+            <Dependent Role="log_customers">
+              <PropertyRef Name="custID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -563,37 +623,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="log_accounts">
-            <EntityTypeMapping TypeName="mini_bankModel.log_accounts">
-              <MappingFragment StoreEntitySet="log_accounts">
-                <ScalarProperty Name="logID" ColumnName="logID" />
-                <ScalarProperty Name="custID" ColumnName="custID" />
-                <ScalarProperty Name="MakerID" ColumnName="MakerID" />
-                <ScalarProperty Name="CheckerID" ColumnName="CheckerID" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="branchCode" ColumnName="branchCode" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="AccID" ColumnName="AccID" />
-                <ScalarProperty Name="MakerName" ColumnName="MakerName" />
-                <ScalarProperty Name="CheckerName" ColumnName="CheckerName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="log_customers">
-            <EntityTypeMapping TypeName="mini_bankModel.log_customers">
-              <MappingFragment StoreEntitySet="log_customers">
-                <ScalarProperty Name="logID" ColumnName="logID" />
-                <ScalarProperty Name="custID" ColumnName="custID" />
-                <ScalarProperty Name="MakerID" ColumnName="MakerID" />
-                <ScalarProperty Name="CheckerID" ColumnName="CheckerID" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="branchCode" ColumnName="branchCode" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="MakerName" ColumnName="MakerName" />
-                <ScalarProperty Name="CheckerName" ColumnName="CheckerName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Role_look_up">
             <EntityTypeMapping TypeName="mini_bankModel.Role_look_up">
               <MappingFragment StoreEntitySet="Role_look_up">
@@ -641,6 +670,67 @@
                 <ScalarProperty Name="ToCur" ColumnName="ToCur" />
                 <ScalarProperty Name="FromCur" ColumnName="FromCur" />
                 <ScalarProperty Name="RateID" ColumnName="RateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SingleSideTransactions_log">
+            <EntityTypeMapping TypeName="mini_bankModel.SingleSideTransactions_log">
+              <MappingFragment StoreEntitySet="SingleSideTransactions_log">
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="Deposite" ColumnName="Deposite" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="customerName" ColumnName="customerName" />
+                <ScalarProperty Name="transactionID" ColumnName="transactionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions_log">
+            <EntityTypeMapping TypeName="mini_bankModel.Transactions_log">
+              <MappingFragment StoreEntitySet="Transactions_log">
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="rateUsed" ColumnName="rateUsed" />
+                <ScalarProperty Name="amountInDistCurr" ColumnName="amountInDistCurr" />
+                <ScalarProperty Name="amountInSrcCurr" ColumnName="amountInSrcCurr" />
+                <ScalarProperty Name="distCurr" ColumnName="distCurr" />
+                <ScalarProperty Name="srcCurr" ColumnName="srcCurr" />
+                <ScalarProperty Name="distAccountNumber" ColumnName="distAccountNumber" />
+                <ScalarProperty Name="srcAccountNumber" ColumnName="srcAccountNumber" />
+                <ScalarProperty Name="recieverID" ColumnName="recieverID" />
+                <ScalarProperty Name="recieverName" ColumnName="recieverName" />
+                <ScalarProperty Name="senderID" ColumnName="senderID" />
+                <ScalarProperty Name="senderName" ColumnName="senderName" />
+                <ScalarProperty Name="transactionID" ColumnName="transactionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="log_accounts">
+            <EntityTypeMapping TypeName="mini_bankModel.log_accounts">
+              <MappingFragment StoreEntitySet="log_accounts">
+                <ScalarProperty Name="AccID" ColumnName="AccID" />
+                <ScalarProperty Name="CheckerName" ColumnName="CheckerName" />
+                <ScalarProperty Name="MakerName" ColumnName="MakerName" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="branchCode" ColumnName="branchCode" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="CheckerID" ColumnName="CheckerID" />
+                <ScalarProperty Name="MakerID" ColumnName="MakerID" />
+                <ScalarProperty Name="custID" ColumnName="custID" />
+                <ScalarProperty Name="logID" ColumnName="logID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="log_customers">
+            <EntityTypeMapping TypeName="mini_bankModel.log_customers">
+              <MappingFragment StoreEntitySet="log_customers">
+                <ScalarProperty Name="CheckerName" ColumnName="CheckerName" />
+                <ScalarProperty Name="MakerName" ColumnName="MakerName" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="CheckerID" ColumnName="CheckerID" />
+                <ScalarProperty Name="MakerID" ColumnName="MakerID" />
+                <ScalarProperty Name="custID" ColumnName="custID" />
+                <ScalarProperty Name="logID" ColumnName="logID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

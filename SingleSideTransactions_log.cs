@@ -12,17 +12,13 @@ namespace NBE
     using System;
     using System.Collections.Generic;
     
-    public partial class log_customers
+    public partial class SingleSideTransactions_log
     {
-        public int logID { get; set; }
-        public int custID { get; set; }
-        public Nullable<int> MakerID { get; set; }
-        public Nullable<int> CheckerID { get; set; }
-        public System.DateTime Date { get; set; }
-        public int status { get; set; }
-        public string MakerName { get; set; }
-        public string CheckerName { get; set; }
-    
-        public virtual CUSTOMER CUSTOMER { get; set; }
+        public int transactionID { get; set; }
+        public string customerName { get; set; }
+        public string AccountNumber { get; set; }
+        public long amount { get; set; }
+        public bool Deposite { get; set; }
+        public System.DateTime dateCreated { get; set; }
     }
 }

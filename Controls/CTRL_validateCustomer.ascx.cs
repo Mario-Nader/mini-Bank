@@ -129,8 +129,19 @@ namespace NBE.Controls
                     reader.Close();
                     if (StillEditable)
                     {
+                        log_customers log = new log_customers();
                         if (e.CommandName == "approveRow")
                         {
+                            using (mini_bankEntities db = new mini_bankEntities())
+                            {
+                                log.status = 2;
+                                log.custID = custID;
+                                log.CheckerID = Convert.ToInt32(Session["ID"]);
+                                log.CheckerName = Session["uname"].ToString();
+                                log.Date = DateTime.Now;
+                                db.log_customers.Add(log);
+                                db.SaveChanges();
+                            }
                             int checkerID = Convert.ToInt32(Session["ID"]);
                             string checkerName = Session["uname"].ToString();
                             String query = String.Format("update CUSTOMERS set status = 2 ,checkerID = {1}, checkerName = '{2}' where custID = {0}", custID,checkerID, checkerName);
@@ -160,12 +171,30 @@ namespace NBE.Controls
                         }
                         else if (e.CommandName == "rejectRow")
                         {
+                            using (mini_bankEntities db = new mini_bankEntities())
+                            {
+                                log.status = 3;
+                                log.custID = custID;
+                                log.CheckerID = Convert.ToInt32(Session["ID"]);
+                                log.CheckerName = Session["uname"].ToString();
+                                db.log_customers.Add(log);
+                                db.SaveChanges();
+                            }
                             String query = String.Format("update CUSTOMERS set status = 3 , checkerID = {0}, checkerName = '{1}' where CustID = {2}", Convert.ToInt32(Session["ID"]), Session["uname"].ToString(), custID);
                             SqlCommand cmd = new SqlCommand(query, DBconnection);
                             cmd.ExecuteNonQuery();
                         }
                         else if (e.CommandName == "requestEditRow")
                         {
+                            using (mini_bankEntities db = new mini_bankEntities())
+                            {
+                                log.status = 4;
+                                log.custID = custID;
+                                log.CheckerID = Convert.ToInt32(Session["ID"]);
+                                log.CheckerName = Session["uname"].ToString();
+                                db.log_customers.Add(log);
+                                db.SaveChanges();
+                            }
                             GridViewRow row = (GridViewRow)gv_CustomerRequests.Rows[rowIndex];
                             TextBox TXTcomment = (TextBox)row.FindControl("txt_comment");
                             String comment = "";

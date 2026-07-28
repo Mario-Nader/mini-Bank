@@ -34,6 +34,7 @@ namespace NBE.Controls
                     var custQuery = from u in db.USERS
                                     where u.ID == userID
                                     select u.CustomerID;
+
                     int customerID = Convert.ToInt32(custQuery.Single());
                     var accountQuery = from acc in db.ACCOUNTS
                                        where acc.customerID == customerID
@@ -77,11 +78,15 @@ namespace NBE.Controls
         protected void btn_submit_Click(object sender, EventArgs e)
         {
             using (mini_bankEntities db = new mini_bankEntities()) {
+
+                Transactions_log log = new Transactions_log();
+
                 #region getting the source account
                 ACCOUNT srcAcc = db.ACCOUNTS
                                  .Where(acc => acc.AccountNumber == ddl_srcAccount.Text)
                                  .Select(acc => acc)
                                  .Single();
+                
                 #endregion
 
                 #region getting Distenation account
@@ -89,14 +94,20 @@ namespace NBE.Controls
                  .Where(acc => acc.AccountNumber == txt_DistAccount.Text)
                  .Select(acc => acc)
                  .Single();
+                log.senderName = Session["uname"].ToString();
+                log.recieverName = txt_ownerName.Text;
+
                 if (distAccount == null)
                 {
                     lit_state.Text = "there is no account with that number";
                 }
                 #endregion
-
                 else
                 {
+                    log.distAccountNumber = distAccount.AccountNumber;
+                    log.srcAccountNumber = srcAcc.AccountNumber;
+                    log.senderID = Convert.ToInt32(srcAcc.customerID);
+                    log.recieverID = Convert.ToInt32(distAccount.customerID);
                     lit_state.Text = "";
                     #region making the transaction, handling exchange rates and attaching accounts to database
                     if (srcAcc.amount <= Convert.ToInt32(txt_amount.Text))
@@ -108,10 +119,12 @@ namespace NBE.Controls
                     //    ACCOUNT distUpdate = new ACCOUNT();
                     //    ACCOUNT srcUpdate = new ACCOUNT();
                         if (txt_srcCurr.Text == txt_distCurr.Text)
-                        {
+                        {   
                             #region same currency logic
                             srcAcc.amount = srcAcc.amount - Convert.ToInt32(txt_amount.Text);
                             distAccount.amount = distAccount.amount + Convert.ToInt32(txt_amount.Text);
+                            log.srcCurr = txt_distCurr.Text;
+                            log.distCurr = txt_distCurr.Text;
                             #endregion
                         }
                         else
@@ -119,6 +132,8 @@ namespace NBE.Controls
                             #region currency exchange Rate handling
                             double srcToEGP = 1.0;
                             double EGPToDist = 1.0;
+                            log.srcCurr = txt_srcCurr.Text;
+                            log.distCurr = txt_distCurr.Text;
                             if (txt_srcCurr.Text != "EGP")
                             {
                                 srcToEGP = db.currency_rate_look_up
@@ -133,19 +148,24 @@ namespace NBE.Controls
                                     .Select(rate => rate.Rate)
                                     .Single();
                             }
-                            srcAcc.amount = srcAcc.amount - Convert.ToInt32(txt_amount.Text);
-                            double intermediateAmount = Convert.ToInt32(txt_amount.Text) * srcToEGP;
-                            intermediateAmount = intermediateAmount * EGPToDist;
-                            distAccount.amount = distAccount.amount + (long)intermediateAmount;// this may cause lose of less than 1 of the recipient currency
+                        srcAcc.amount = srcAcc.amount - Convert.ToInt32(txt_amount.Text);
+                        log.amountInSrcCurr = Convert.ToInt32(txt_amount.Text);
+                        double intermediateAmount = Convert.ToInt32(txt_amount.Text) * srcToEGP;
+                        log.rateUsed = srcToEGP * EGPToDist;
+                        intermediateAmount = intermediateAmount * EGPToDist;
+                        log.amountInDistCurr = (long)intermediateAmount;
+                        distAccount.amount = distAccount.amount + (long)intermediateAmount;// this may cause lose of less than 1 of the recipient currency
                             #endregion
                         }
 
                         #region saving to the database
                         //srcUpdate.AccID = srcAcc.AccID;
                         txt_balance.Text = Convert.ToString(srcAcc.amount);
-                        //distAccount.AccID = distAccount.AccID;
-                        //db.ACCOUNTS.Attach(srcUpdate);
-                        //db.ACCOUNTS.Attach(distUpdate);
+
+                    //distAccount.AccID = distAccount.AccID;
+                    //db.ACCOUNTS.Attach(srcUpdate);
+                    //db.ACCOUNTS.Attach(distUpdate);
+                        db.Transactions_log.Add(log);
                         db.SaveChanges();
                         #endregion
                     }

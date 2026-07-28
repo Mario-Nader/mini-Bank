@@ -113,6 +113,12 @@ namespace NBE.Controls
                     update.MakerID = Convert.ToInt32(Session["ID"]);
                     update.status = 5;
                     update.comments = txt_comment.Text;
+                    log_customers log = new log_customers();
+                    log.custID = update.custID;
+                    log.MakerID = Convert.ToInt32(Session["ID"]);
+                    log.MakerName = Session["uname"].ToString();
+                    log.status = 5;
+                    db.log_customers.Add(log);
                     //update.comments = txt
                     db.SaveChanges();
                 }

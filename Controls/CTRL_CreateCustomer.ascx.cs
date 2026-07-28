@@ -78,47 +78,60 @@ namespace NBE.Controls
                             String InsertCustomerStatment = "insert into Customers (Name, CIF, address, email, age, gender,MakerID,status,nationalID,MakerName,phone) values (@username, @CIF, @address,@email,@age,@gender,@makerID,1,@nationalID,@makerName,@phone)";
 
                             SqlCommand InserCustomerCmd = new SqlCommand(InsertCustomerStatment, DBconnection);
-                            InserCustomerCmd.Parameters.AddWithValue("@username", txt_name.Text);
-                            InserCustomerCmd.Parameters.AddWithValue("@phone", txt_phone.Text);
-                            InserCustomerCmd.Parameters.AddWithValue("@CIF", CIF);
-                            InserCustomerCmd.Parameters.AddWithValue("@address", txt_address.Text);
-                            InserCustomerCmd.Parameters.AddWithValue("@email", txt_email.Text);
-                            InserCustomerCmd.Parameters.AddWithValue("@age", Convert.ToInt32(txt_age.Text));
-                            InserCustomerCmd.Parameters.AddWithValue("@gender", Convert.ToChar(RadioButtonList1.SelectedValue));
-                            InserCustomerCmd.Parameters.AddWithValue("@makerID", Session["ID"]);
-                            InserCustomerCmd.Parameters.AddWithValue("@nationalID", txt_nationalD.Text);
-                            InserCustomerCmd.Parameters.AddWithValue("@makerName", Session["uname"]);
-                            int rowsAffected = InserCustomerCmd.ExecuteNonQuery();
-                            if (rowsAffected == 0)
+                            using (mini_bankEntities db = new mini_bankEntities())
                             {
-                                lit_status.Text = "an error happened please try again later";
-                                txt_address.Text = "";
-                                txt_age.Text = "";
-                                txt_email.Text = "";
-                                txt_name.Text = "";
-                                txt_nationalD.Text = "";
-                                txt_phone.Text = "";
-                                RadioButtonList1.ClearSelection();
+                                log_customers log = new log_customers();
+                                log.MakerID = Convert.ToInt32(Session["ID"]);
+                                log.status = 1;
+                                log.MakerName = Session["uname"].ToString();
+
+                                InserCustomerCmd.Parameters.AddWithValue("@username", txt_name.Text);
+                                InserCustomerCmd.Parameters.AddWithValue("@phone", txt_phone.Text);
+                                InserCustomerCmd.Parameters.AddWithValue("@CIF", CIF);
+                                InserCustomerCmd.Parameters.AddWithValue("@address", txt_address.Text);
+                                InserCustomerCmd.Parameters.AddWithValue("@email", txt_email.Text);
+                                InserCustomerCmd.Parameters.AddWithValue("@age", Convert.ToInt32(txt_age.Text));
+                                InserCustomerCmd.Parameters.AddWithValue("@gender", Convert.ToChar(RadioButtonList1.SelectedValue));
+                                InserCustomerCmd.Parameters.AddWithValue("@makerID", Session["ID"]);
+                                InserCustomerCmd.Parameters.AddWithValue("@nationalID", txt_nationalD.Text);
+                                InserCustomerCmd.Parameters.AddWithValue("@makerName", Session["uname"]);
+                                int rowsAffected = InserCustomerCmd.ExecuteNonQuery();
+
+                                if (rowsAffected == 0)
+                                {
+                                    lit_status.Text = "an error happened please try again later";
+                                    txt_address.Text = "";
+                                    txt_age.Text = "";
+                                    txt_email.Text = "";
+                                    txt_name.Text = "";
+                                    txt_nationalD.Text = "";
+                                    txt_phone.Text = "";
+                                    RadioButtonList1.ClearSelection();
 
 
-                            }
-                            else
-                            {
-                                lit_status.Text = "customer creation request was submitted successfully \n the customer will enter with CIF :" + CIF + " and password : NBE@[customer's nationalID]";
-                                txt_address.Text = "";
-                                txt_age.Text = "";
-                                txt_email.Text = "";
-                                txt_name.Text = "";
-                                txt_nationalD.Text = "";
-                                txt_phone.Text = "";
-                                RadioButtonList1.ClearSelection();
+                                }
+                                else
+                                {
+                                    log.custID = db.CUSTOMERS.Where(cust => cust.CIF == CIF).Select(cust => cust.custID).Single();
+                                    log.Date = DateTime.Now;
+                                    db.log_customers.Add(log);
+                                    db.SaveChanges();
+                                    lit_status.Text = "customer creation request was submitted successfully \n the customer will enter with CIF :" + CIF + " and password : NBE@[customer's nationalID]";
+                                    txt_address.Text = "";
+                                    txt_age.Text = "";
+                                    txt_email.Text = "";
+                                    txt_name.Text = "";
+                                    txt_nationalD.Text = "";
+                                    txt_phone.Text = "";
+                                    RadioButtonList1.ClearSelection();
 
+                                }
                             }
 
                         }
                     }
                     catch (Exception exp)
-                    {
+                    { 
                         lit_status.Text = exp.Message;
                     }
                 }

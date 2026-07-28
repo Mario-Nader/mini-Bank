@@ -100,7 +100,6 @@
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.js" />
     <Content Include="bootstrap-5.3.8-dist\js\bootstrap.min.js" />
     <Content Include="Controls\ChangePassword.ascx" />
-    <Content Include="Controls\CTRL_accountEdit.ascx" />
     <Content Include="Controls\CTRL_addAccount.ascx" />
     <Content Include="Controls\CTRL_CheckerMenu.ascx" />
     <Content Include="Controls\CTRL_CreateCustomer.ascx" />
@@ -188,13 +187,6 @@
     </Compile>
     <Compile Include="Controls\ChangePassword.ascx.designer.cs">
       <DependentUpon>ChangePassword.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\CTRL_accountEdit.ascx.cs">
-      <DependentUpon>CTRL_accountEdit.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Controls\CTRL_accountEdit.ascx.designer.cs">
-      <DependentUpon>CTRL_accountEdit.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\CTRL_addAccount.ascx.cs">
       <DependentUpon>CTRL_addAccount.ascx</DependentUpon>
@@ -292,6 +284,12 @@
     </Compile>
     <Compile Include="EditCustomers.aspx.designer.cs">
       <DependentUpon>EditCustomers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SingleSideTransactions_log.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Transactions_log.cs">
+      <DependentUpon>NBEDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="WithdrawMoney.aspx.cs">
       <DependentUpon>WithdrawMoney.aspx</DependentUpon>

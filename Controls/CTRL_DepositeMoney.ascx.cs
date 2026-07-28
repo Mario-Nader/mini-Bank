@@ -16,6 +16,7 @@ namespace NBE.Controls
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            SingleSideTransactions_log log = new SingleSideTransactions_log();
             if (txt_AccountNumber.Text == "" || txt_amount.Text == "")
             {
                 lit_status.Text = "write your data";
@@ -38,7 +39,14 @@ namespace NBE.Controls
                         //update.amount += Convert.ToInt32(txt_amount.Text);
                         //update.AccID = account.AccID;
                         //db.ACCOUNTS.Attach(update);
+                        log.amount = Convert.ToInt32(txt_amount.Text);
+                        log.AccountNumber = account.AccountNumber;
+                        int custID = Convert.ToInt32(account.customerID);
+                        string name = db.CUSTOMERS.Where(cust => cust.custID == custID).Select(c => c.Name).Single();
+                        log.customerName = name;
+                        log.Deposite = true;
                         account.amount += Convert.ToInt32(txt_amount.Text);
+                        db.SingleSideTransactions_log.Add(log);
                         db.SaveChanges();
                         txt_amount.Text = "";
                         txt_AccountNumber.Text = "";

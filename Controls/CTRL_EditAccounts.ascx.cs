@@ -185,6 +185,15 @@ namespace NBE.Controls
                     update.status = 5;
                     update.MakerName = Session["uname"].ToString();
                     update.MakerID = Convert.ToInt32(Session["ID"]);
+                    log_accounts log = new log_accounts();
+                    log.AccID = update.AccID;
+                    log.custID = Convert.ToInt32(update.customerID);
+                    log.MakerID = Convert.ToInt32(Session["ID"]);
+                    log.MakerName = Session["uname"].ToString();
+                    log.branchCode = update.branch;
+                    log.status = 5;
+                    log.Date = DateTime.Now;
+                    db.log_accounts.Add(log);
                     #endregion
 
                     db.SaveChanges();

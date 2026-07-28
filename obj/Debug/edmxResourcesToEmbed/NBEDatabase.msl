@@ -83,37 +83,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="log_accounts">
-      <EntityTypeMapping TypeName="mini_bankModel.log_accounts">
-        <MappingFragment StoreEntitySet="log_accounts">
-          <ScalarProperty Name="logID" ColumnName="logID" />
-          <ScalarProperty Name="custID" ColumnName="custID" />
-          <ScalarProperty Name="MakerID" ColumnName="MakerID" />
-          <ScalarProperty Name="CheckerID" ColumnName="CheckerID" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="branchCode" ColumnName="branchCode" />
-          <ScalarProperty Name="status" ColumnName="status" />
-          <ScalarProperty Name="AccID" ColumnName="AccID" />
-          <ScalarProperty Name="MakerName" ColumnName="MakerName" />
-          <ScalarProperty Name="CheckerName" ColumnName="CheckerName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="log_customers">
-      <EntityTypeMapping TypeName="mini_bankModel.log_customers">
-        <MappingFragment StoreEntitySet="log_customers">
-          <ScalarProperty Name="logID" ColumnName="logID" />
-          <ScalarProperty Name="custID" ColumnName="custID" />
-          <ScalarProperty Name="MakerID" ColumnName="MakerID" />
-          <ScalarProperty Name="CheckerID" ColumnName="CheckerID" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="branchCode" ColumnName="branchCode" />
-          <ScalarProperty Name="status" ColumnName="status" />
-          <ScalarProperty Name="MakerName" ColumnName="MakerName" />
-          <ScalarProperty Name="CheckerName" ColumnName="CheckerName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Role_look_up">
       <EntityTypeMapping TypeName="mini_bankModel.Role_look_up">
         <MappingFragment StoreEntitySet="Role_look_up">
@@ -161,6 +130,67 @@
           <ScalarProperty Name="ToCur" ColumnName="ToCur" />
           <ScalarProperty Name="FromCur" ColumnName="FromCur" />
           <ScalarProperty Name="RateID" ColumnName="RateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SingleSideTransactions_log">
+      <EntityTypeMapping TypeName="mini_bankModel.SingleSideTransactions_log">
+        <MappingFragment StoreEntitySet="SingleSideTransactions_log">
+          <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+          <ScalarProperty Name="Deposite" ColumnName="Deposite" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+          <ScalarProperty Name="customerName" ColumnName="customerName" />
+          <ScalarProperty Name="transactionID" ColumnName="transactionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transactions_log">
+      <EntityTypeMapping TypeName="mini_bankModel.Transactions_log">
+        <MappingFragment StoreEntitySet="Transactions_log">
+          <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+          <ScalarProperty Name="rateUsed" ColumnName="rateUsed" />
+          <ScalarProperty Name="amountInDistCurr" ColumnName="amountInDistCurr" />
+          <ScalarProperty Name="amountInSrcCurr" ColumnName="amountInSrcCurr" />
+          <ScalarProperty Name="distCurr" ColumnName="distCurr" />
+          <ScalarProperty Name="srcCurr" ColumnName="srcCurr" />
+          <ScalarProperty Name="distAccountNumber" ColumnName="distAccountNumber" />
+          <ScalarProperty Name="srcAccountNumber" ColumnName="srcAccountNumber" />
+          <ScalarProperty Name="recieverID" ColumnName="recieverID" />
+          <ScalarProperty Name="recieverName" ColumnName="recieverName" />
+          <ScalarProperty Name="senderID" ColumnName="senderID" />
+          <ScalarProperty Name="senderName" ColumnName="senderName" />
+          <ScalarProperty Name="transactionID" ColumnName="transactionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="log_accounts">
+      <EntityTypeMapping TypeName="mini_bankModel.log_accounts">
+        <MappingFragment StoreEntitySet="log_accounts">
+          <ScalarProperty Name="AccID" ColumnName="AccID" />
+          <ScalarProperty Name="CheckerName" ColumnName="CheckerName" />
+          <ScalarProperty Name="MakerName" ColumnName="MakerName" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="branchCode" ColumnName="branchCode" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="CheckerID" ColumnName="CheckerID" />
+          <ScalarProperty Name="MakerID" ColumnName="MakerID" />
+          <ScalarProperty Name="custID" ColumnName="custID" />
+          <ScalarProperty Name="logID" ColumnName="logID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="log_customers">
+      <EntityTypeMapping TypeName="mini_bankModel.log_customers">
+        <MappingFragment StoreEntitySet="log_customers">
+          <ScalarProperty Name="CheckerName" ColumnName="CheckerName" />
+          <ScalarProperty Name="MakerName" ColumnName="MakerName" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="CheckerID" ColumnName="CheckerID" />
+          <ScalarProperty Name="MakerID" ColumnName="MakerID" />
+          <ScalarProperty Name="custID" ColumnName="custID" />
+          <ScalarProperty Name="logID" ColumnName="logID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

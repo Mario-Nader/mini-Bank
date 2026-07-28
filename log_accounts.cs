@@ -16,14 +16,14 @@ namespace NBE
     {
         public int logID { get; set; }
         public int custID { get; set; }
-        public int MakerID { get; set; }
-        public int CheckerID { get; set; }
+        public Nullable<int> MakerID { get; set; }
+        public Nullable<int> CheckerID { get; set; }
         public System.DateTime Date { get; set; }
         public string branchCode { get; set; }
         public int status { get; set; }
-        public int AccID { get; set; }
         public string MakerName { get; set; }
         public string CheckerName { get; set; }
+        public int AccID { get; set; }
     
         public virtual ACCOUNT ACCOUNT { get; set; }
     }
