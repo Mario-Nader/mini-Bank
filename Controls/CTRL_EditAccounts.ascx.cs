@@ -161,6 +161,33 @@ namespace NBE.Controls
             }
         }
 
+        private Boolean ConcurrencyCheck(int AccID)
+        {
+            try
+            {
+                using (mini_bankEntities db = new mini_bankEntities())
+                {
+                    ACCOUNT updateCheck = db.ACCOUNTS.Where(acc => acc.AccID == AccID).Single();
+                    if (updateCheck.workingID == null)
+                    {
+                        updateCheck.workingID = Convert.ToInt32(Session["ID"]);
+                        db.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        if (updateCheck.workingID != Convert.ToInt32(Session["ID"]))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) {
+                return false;
+            }
+            return false;
+        }
 
         protected void gvAccountRequests_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
@@ -173,39 +200,63 @@ namespace NBE.Controls
                 using (mini_bankEntities db = new mini_bankEntities())
                 {
                     #region taking input form the row to the data object
-                    ACCOUNT update = db.ACCOUNTS.Where(acc => acc.AccID == AccID).Single();
-                    TextBox txt_custName = (TextBox)row.FindControl("txt_name");
-                    DropDownList ddl_curr = (DropDownList)row.FindControl("ddl_currency");
-                    TextBox txt_amount = (TextBox)row.FindControl("txt_amount");
-                    //TextBox txt_branch = (TextBox)row.FindControl("txt_branch");
-                    //TextBox txt_class = (TextBox)row.FindControl("txt_class");
-                    TextBox txt_comment = (TextBox)row.FindControl("txt_commentEdited");
-                    DropDownList ddl_branch = (DropDownList)row.FindControl("ddl_branch");
-                    DropDownList ddl_class = (DropDownList)row.FindControl("ddl_class");
-                    update.CustomerName = txt_custName.Text;
-                    update.currency = Convert.ToInt32(ddl_curr.SelectedValue);
-                    update.amount = Convert.ToInt32(txt_amount.Text);
-                    update.branch = ddl_branch.SelectedValue.ToString();
-                    update.classcode = ddl_class.SelectedValue.ToString();
-                    update.Comment = txt_comment.Text;
-                    string oldAccountNumber = update.AccountNumber.ToString();
-                    string CIF = oldAccountNumber.Substring(6, 8);
-                    update.AccountNumber = update.branch.ToString() + update.classcode.ToString() + CIF + update.uniqueIdentifier.ToString();
-                    update.status = 5;
-                    update.MakerName = Session["uname"].ToString();
-                    update.MakerID = Convert.ToInt32(Session["ID"]);
-                    log_accounts log = new log_accounts();
-                    log.AccID = update.AccID;
-                    log.custID = Convert.ToInt32(update.customerID);
-                    log.MakerID = Convert.ToInt32(Session["ID"]);
-                    log.MakerName = Session["uname"].ToString();
-                    log.branchCode = update.branch;
-                    log.status = 5;
-                    log.Date = DateTime.Now;
-                    db.log_accounts.Add(log);
-                    #endregion
 
-                    db.SaveChanges();
+                    //ACCOUNT updateCheck = db.ACCOUNTS.Where(acc => acc.AccID == AccID).Single();
+                    //if (updateCheck.workingID == null)
+                    //{
+                    //    updateCheck.workingID = Convert.ToInt32(Session["ID"]);
+                    //    db.SaveChanges();
+                    //}
+                    //else
+                    //{
+                    //    if (updateCheck.workingID != Convert.ToInt32(Session["ID"]))
+                    //    {
+                    //        lit_err.Text = "other maker is working on this now you can Edit other accounts";
+                    //        DataBind();
+                    //        return;
+                    //    }
+                    //}
+                   bool available =ConcurrencyCheck(AccID);
+                    if (available)
+                    {
+                        ACCOUNT update = db.ACCOUNTS.Where(acc => acc.AccID == AccID).Single();
+                        TextBox txt_custName = (TextBox)row.FindControl("txt_name");
+                        DropDownList ddl_curr = (DropDownList)row.FindControl("ddl_currency");
+                        TextBox txt_amount = (TextBox)row.FindControl("txt_amount");
+                        //TextBox txt_branch = (TextBox)row.FindControl("txt_branch");
+                        //TextBox txt_class = (TextBox)row.FindControl("txt_class");
+                        TextBox txt_comment = (TextBox)row.FindControl("txt_commentEdited");
+                        DropDownList ddl_branch = (DropDownList)row.FindControl("ddl_branch");
+                        DropDownList ddl_class = (DropDownList)row.FindControl("ddl_class");
+                        update.CustomerName = txt_custName.Text;
+                        update.currency = Convert.ToInt32(ddl_curr.SelectedValue);
+                        update.amount = Convert.ToInt32(txt_amount.Text);
+                        update.branch = ddl_branch.SelectedValue.ToString();
+                        update.classcode = ddl_class.SelectedValue.ToString();
+                        update.Comment = txt_comment.Text;
+                        string oldAccountNumber = update.AccountNumber.ToString();
+                        string CIF = oldAccountNumber.Substring(6, 8);
+                        update.AccountNumber = update.branch.ToString() + update.classcode.ToString() + CIF + update.uniqueIdentifier.ToString();
+                        update.status = 5;
+                        update.MakerName = Session["uname"].ToString();
+                        update.MakerID = Convert.ToInt32(Session["ID"]);
+                        log_accounts log = new log_accounts();
+                        log.AccID = update.AccID;
+                        log.custID = Convert.ToInt32(update.customerID);
+                        log.MakerID = Convert.ToInt32(Session["ID"]);
+                        log.MakerName = Session["uname"].ToString();
+                        log.branchCode = update.branch;
+                        log.status = 5;
+                        log.Date = DateTime.Now;
+                        db.log_accounts.Add(log);
+                        #endregion
+
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        lit_err.Text = "another maker is working on this account so you can work on other accounts";
+                    }
                 }
                 gvAccountRequests.EditIndex = -1;
                 bindData();

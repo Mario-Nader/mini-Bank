@@ -21,6 +21,36 @@ namespace NBE.Controls
     }
     public partial class CTRL_ValidateAccounts : System.Web.UI.UserControl
     {
+
+        private Boolean ConcurrencyCheck(int AccID)
+        {
+            try
+            {
+                using (mini_bankEntities db = new mini_bankEntities())
+                {
+                    ACCOUNT updateCheck = db.ACCOUNTS.Where(acc => acc.AccID == AccID).Single();
+                    if (updateCheck.workingID == null)
+                    {
+                        updateCheck.workingID = Convert.ToInt32(Session["ID"]);
+                        db.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        if (updateCheck.workingID != Convert.ToInt32(Session["ID"]))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return false;
+        }
+
         protected void verifyUser()
         {
             if (Session["role"] == null || (Convert.ToInt32(Session["role"]) != 1))
@@ -105,11 +135,14 @@ namespace NBE.Controls
                         .Where(a => a.AccID == AccID && (a.status == 1 || a.status == 5))
                         .Any();
                     #endregion
-
+                    bool available = ConcurrencyCheck(AccID);
                     #region making updates according to the button pressed
                     if (!editable)
                     {
                         lit_status.Text = "another checker already handled this request";
+                    }else if (!available)
+                    {
+                        lit_status.Text= "another checker is handling this request";
                     }
                     else
                     {
@@ -127,7 +160,7 @@ namespace NBE.Controls
                             //db.Entry(update).Property(a=>a.status).IsModified = true;
                             log.status = 2;
                             update.status = 2;
-                            
+
                         }
                         else if (e.CommandName == "rejectRow")
                         {
@@ -155,8 +188,8 @@ namespace NBE.Controls
                         update.CheckerID = Convert.ToInt32(Session["ID"]);
                         db.log_accounts.Add(log);
                         db.SaveChanges();
-                        bindData();
                     }
+                        bindData();
                     #endregion
                 }
             }
