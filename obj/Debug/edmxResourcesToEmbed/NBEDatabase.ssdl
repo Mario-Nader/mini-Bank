@@ -20,6 +20,7 @@
     <Property Name="MakerName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="CheckerName" Type="nvarchar" MaxLength="50" />
     <Property Name="CustomerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="workingID" Type="int" />
   </EntityType>
   <EntityType Name="accounts_look_up">
     <Key>
@@ -84,6 +85,7 @@
     <Property Name="status" Type="int" Nullable="false" />
     <Property Name="nationalID" Type="nvarchar" MaxLength="14" Nullable="false" />
     <Property Name="comments" Type="nvarchar" MaxLength="250" />
+    <Property Name="workingID" Type="int" />
   </EntityType>
   <EntityType Name="log_accounts">
     <Key>

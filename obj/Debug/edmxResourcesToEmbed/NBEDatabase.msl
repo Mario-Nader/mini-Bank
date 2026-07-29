@@ -4,6 +4,7 @@
     <EntitySetMapping Name="ACCOUNTS">
       <EntityTypeMapping TypeName="mini_bankModel.ACCOUNT">
         <MappingFragment StoreEntitySet="ACCOUNTS">
+          <ScalarProperty Name="workingID" ColumnName="workingID" />
           <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
           <ScalarProperty Name="CheckerName" ColumnName="CheckerName" />
           <ScalarProperty Name="MakerName" ColumnName="MakerName" />
@@ -64,6 +65,7 @@
     <EntitySetMapping Name="CUSTOMERS">
       <EntityTypeMapping TypeName="mini_bankModel.CUSTOMER">
         <MappingFragment StoreEntitySet="CUSTOMERS">
+          <ScalarProperty Name="workingID" ColumnName="workingID" />
           <ScalarProperty Name="custID" ColumnName="custID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="CIF" ColumnName="CIF" />

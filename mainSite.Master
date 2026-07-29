@@ -11,6 +11,13 @@
      <link href="Styles/general.css" rel="stylesheet" />
      <link href="Styles/grids.css" rel="stylesheet" />
      <link href="Styles/buttons.css" rel="stylesheet" />
+    <script type ="text/javascript">
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        });
+    </script>
     <asp:ContentPlaceHolder ID="CPH_head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
