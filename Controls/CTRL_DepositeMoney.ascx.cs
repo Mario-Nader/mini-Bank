@@ -9,13 +9,22 @@ namespace NBE.Controls
 {
     public partial class depositeMoney : System.Web.UI.UserControl
     {
+        protected void verifyUser()
+        {
+            if (Session["role"] == null || (Convert.ToInt32(Session["role"]) != 2))
+            {
+                Session.Clear();
+                Response.Redirect("WebForm1.aspx");
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            verifyUser();
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            verifyUser();
             SingleSideTransactions_log log = new SingleSideTransactions_log();
             if (txt_AccountNumber.Text == "" || txt_amount.Text == "")
             {

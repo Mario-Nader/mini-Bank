@@ -10,6 +10,14 @@ namespace NBE.Controls
     public partial class CTRL_transfereMoney : System.Web.UI.UserControl
     {
         private static Dictionary<int, currency_look_up> CurrencyLookup;//using the currencylookup table as a field to avoid quering it every time the account changes
+        protected void verifyUser()
+        {
+            if (Session["role"] == null || (Convert.ToInt32(Session["role"]) != 3))
+            {
+                Session.Clear();
+                Response.Redirect("WebForm1.aspx");
+            }
+        }
         private void LoadCurrencies() //check if it is loaded and if not it loads it
         {
             if (CurrencyLookup == null)
@@ -24,6 +32,7 @@ namespace NBE.Controls
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            verifyUser();
             LoadCurrencies();//load currencies if not loaded
             if (!Page.IsPostBack)
             {
@@ -52,6 +61,7 @@ namespace NBE.Controls
 
         protected void ddl_srcAccount_SelectedIndexChanged(object sender, EventArgs e)
         {
+            verifyUser();
             #region filling the data of the new selected index
             using (mini_bankEntities db = new mini_bankEntities()) {
                     string accountNumber = ddl_srcAccount.Text;
@@ -77,6 +87,7 @@ namespace NBE.Controls
 
         protected void btn_submit_Click(object sender, EventArgs e)
         {
+            verifyUser();
             using (mini_bankEntities db = new mini_bankEntities()) {
 
                 Transactions_log log = new Transactions_log();
@@ -121,12 +132,15 @@ namespace NBE.Controls
                     //    ACCOUNT srcUpdate = new ACCOUNT();
                         if (txt_srcCurr.Text == txt_distCurr.Text)
                         {   
-                            #region same currency logic
-                            srcAcc.amount = srcAcc.amount - Convert.ToInt32(txt_amount.Text);
-                            distAccount.amount = distAccount.amount + Convert.ToInt32(txt_amount.Text);
-                            log.srcCurr = txt_distCurr.Text;
-                            log.distCurr = txt_distCurr.Text;
-                            #endregion
+                        #region same currency logic
+                        srcAcc.amount = srcAcc.amount - Convert.ToInt32(txt_amount.Text);
+                        distAccount.amount = distAccount.amount + Convert.ToInt32(txt_amount.Text);
+                        log.srcCurr = txt_distCurr.Text;
+                        log.distCurr = txt_distCurr.Text;
+                        log.rateUsed = 1.0;
+                        log.amountInDistCurr = Convert.ToInt32(txt_amount.Text);
+                        log.amountInSrcCurr = Convert.ToInt32(txt_amount.Text);
+                        #endregion
                         }
                         else
                         {
@@ -186,6 +200,7 @@ namespace NBE.Controls
 
         protected void check_distAcc_Click(object sender, EventArgs e)
         {
+            verifyUser();
             using (mini_bankEntities db = new mini_bankEntities()) {
 
                 #region getting the distnation account

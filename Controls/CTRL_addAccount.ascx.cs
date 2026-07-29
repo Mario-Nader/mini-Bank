@@ -11,8 +11,17 @@ namespace NBE.Controls
 
     public partial class CTRL_addAccount : System.Web.UI.UserControl
     {
+        protected void verifyUser()
+        {
+            if (Session["role"] == null || (Convert.ToInt32(Session["role"]) != 2))
+            {
+                Session.Clear();
+                Response.Redirect("WebForm1.aspx");
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
+            verifyUser();
             if (!Page.IsPostBack)
             {
                 using(var db = new mini_bankEntities())
@@ -22,6 +31,7 @@ namespace NBE.Controls
                     //var query = from account_look_up in db.accounts_look_up select account_look_up.ClassDescription;
                     var query1 = (from ob in db.accounts_look_up select ob.ClassDescription).ToList();
                     List<String> ClassDespcriptions = query1.ToList();
+                    DDL_Class.Items.Add(new ListItem("--- select ---", ""));
                     for (int i = 0; i < ClassDespcriptions.Count; i++) {
                         DDL_Class.Items.Add(ClassDespcriptions[i]);
                     }
@@ -29,13 +39,14 @@ namespace NBE.Controls
                     //query = from br in db.branches_look_up select br.branch;
                     var query2 = (from ob in db.branches_look_up select ob.branch).ToList(); ;
                     List<String> Branches = query2.ToList();
+                    DDL_Branch.Items.Add(new ListItem("--- select ---", ""));
                     for (int i = 0; i < Branches.Count; i++) { 
                         DDL_Branch.Items.Add(Branches[i]);
                     }
-
                     //query = from crr in db.currency_look_up select crr.currencyCode;
                     var query3 = (from crr in db.currency_look_up select crr.currencyCode).ToList();
                     List<String> Currencies = query3.ToList();
+                    DDL_currency.Items.Add(new ListItem("--- select ---", ""));
                     for (int i = 0; i < Currencies.Count; i++) { 
                         DDL_currency.Items.Add(Currencies[i]);
                     }
@@ -60,28 +71,33 @@ namespace NBE.Controls
         }
         protected void btn_submit_Click(object sender, EventArgs e)
         {
+            verifyUser();
             try
             {
                 using (var db = new mini_bankEntities())
                 {
                     
+                    string nationalID = txt_NationalID.Text;
                     var query = from cust in db.CUSTOMERS
-                                where cust.CIF == txt_CIF.Text
+                                where cust.nationalID == nationalID
                                 select cust;
-                    
                     CUSTOMER customer = query.Single();
+                    
                     if (customer == null)
                     {
-                        lit_test.Text = "the CIF is not correct";
+                        lit_test.Text = "the nationalID is not correct or is not of an NBE customer ";
                     }
                     else
                     {
+                        
                         #region getting the User of the customer
+                        USER user = db.USERS.Where(usr => usr.CustomerID == customer.custID).Select(usr => usr).Single();
                         int custID = customer.custID;
-                        var user = db.USERS
-                                    .Where(u => u.CustomerID == custID)
-                                    .Select(u => new { u.ID, u.active })
-                                    .Single();
+                        if (!Convert.ToBoolean(user.active))
+                        {
+                            lit_test.Text = "the user is not active please ask the customer to change his/her password if they didn't already";
+                            return;
+                        }
                         #endregion
 
                         if (!Convert.ToBoolean(user.active))// checking if the user is active
@@ -93,7 +109,7 @@ namespace NBE.Controls
                            
 
                             #region preparing the data that will be put in the record
-                            String CIF = txt_CIF.Text;
+                            String CIF = customer.CIF;
                             int amount = Convert.ToInt32(txt_Amount.Text);
                             String Branch = DDL_Branch.Text;
                             String Class = DDL_Class.Text;
@@ -180,7 +196,10 @@ namespace NBE.Controls
                             lit_test.Text = "the account was added successfully";
                         }
                         txt_Amount.Text = "";
-                        txt_CIF.Text = "";
+                        txt_NationalID.Text = "";
+                        DDL_Branch.SelectedIndex = 0;
+                        DDL_Class.SelectedIndex = 0;
+                        DDL_currency.SelectedIndex = 0;
                     }
                 }
             }

@@ -9,6 +9,14 @@ namespace NBE.Controls
 {
     public partial class CTRL_EditCustomers : System.Web.UI.UserControl
     {
+        protected void verifyUser()
+        {
+            if (Session["role"] == null || (Convert.ToInt32(Session["role"]) != 2))
+            {
+                Session.Clear();
+                Response.Redirect("WebForm1.aspx");
+            }
+        }
         private static Dictionary<int, currency_look_up> CurrencyLookup;//using the currencylookup table as a field to avoid quering it every time the account changes
         private static Dictionary<string, branches_look_up> BranchLookup;
         private void LoadCurrencies() //check if it is loaded and if not it loads it
@@ -64,6 +72,7 @@ namespace NBE.Controls
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            verifyUser();
             loadLookups();
             if (!Page.IsPostBack) {
                 BindGrid();
@@ -86,6 +95,7 @@ namespace NBE.Controls
 
         protected void gvCustomerRequests_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            verifyUser();
             GridViewRow row = gv_CustomerRequests.Rows[e.RowIndex];
 
             int custID = Convert.ToInt32(gv_CustomerRequests.DataKeys[e.RowIndex].Value);

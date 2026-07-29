@@ -36,6 +36,7 @@ namespace NBE
         public string MakerName { get; set; }
         public string CheckerName { get; set; }
         public string CustomerName { get; set; }
+        public Nullable<int> workingID { get; set; }
     
         public virtual CUSTOMER CUSTOMER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

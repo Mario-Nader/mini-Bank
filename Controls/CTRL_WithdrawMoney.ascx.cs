@@ -9,8 +9,17 @@ namespace NBE.Controls
 {
     public partial class CTRL_WithdrawMoney : System.Web.UI.UserControl
     {
+        protected void verifyUser()
+        {
+            if (Session["role"] == null || (Convert.ToInt32(Session["role"]) != 2))
+            {
+                Session.Clear();
+                Response.Redirect("WebForm1.aspx");
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
+            verifyUser();
             if (!Page.IsPostBack) 
             {
                 ddl_AccountNumbers.Items.Add(new ListItem("-- Submit a National ID --", ""));
@@ -19,6 +28,7 @@ namespace NBE.Controls
 
         protected void btn_submit_Click(object sender, EventArgs e)
         {
+            verifyUser();
             using (mini_bankEntities db = new mini_bankEntities()) {
                 SingleSideTransactions_log log = new SingleSideTransactions_log();
                 string accountNumber = ddl_AccountNumbers.SelectedValue.ToString();
@@ -68,8 +78,9 @@ namespace NBE.Controls
 
         protected void get_Accounts_Click(object sender, EventArgs e)
         {
+            verifyUser();
             try
-            {
+            { 
                 if(txt_nationalID.Text.Length < 14)
                 {
                     lit_status.Text = "please enter a proper national ID";

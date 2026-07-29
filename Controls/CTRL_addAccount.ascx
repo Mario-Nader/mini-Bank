@@ -4,24 +4,25 @@
         width: 100%;
     }
     .auto-style3 {
-        width: 265px;
+        width: 302px;
     }
     .auto-style4 {
-        width: 264px;
+        width: 319px;
     }
 </style>
 
 <table class="auto-style1">
     <tr>
-        <td class="auto-style4">&nbsp; CIF :
-            <asp:TextBox ID="txt_CIF" runat="server"></asp:TextBox>
+        <td class="auto-style4">National ID
+            <asp:TextBox ID="txt_NationalID" runat="server" style="margin-left: 0px"></asp:TextBox>
         </td>
         <td class="auto-style3">
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txt_CIF" ErrorMessage="Enter the CIF of the customer"></asp:RequiredFieldValidator>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator2_nationalID" runat="server" ControlToValidate="txt_NationalID" ErrorMessage="Enter the National ID of the customer" Display="Dynamic"></asp:RequiredFieldValidator>
         </td>
         <td>Branch:
             <asp:DropDownList ID="DDL_Branch" runat="server">
             </asp:DropDownList>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator_branch" runat="server" ErrorMessage="please select the branch" ControlToValidate="DDL_Branch" InitialValue="" Display="Dynamic"></asp:RequiredFieldValidator>
         </td>
         <td>&nbsp;</td>
     </tr>
@@ -30,10 +31,13 @@
             <asp:DropDownList ID="DDL_Class" runat="server">
             </asp:DropDownList>
         </td>
-        <td class="auto-style3">&nbsp;</td>
+        <td class="auto-style3">
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator_class" runat="server" ControlToValidate="DDL_Class" Display="Dynamic" ErrorMessage="please enter the class" InitialValue=""></asp:RequiredFieldValidator>
+        </td>
         <td>Currency:
             <asp:DropDownList ID="DDL_currency" runat="server">
             </asp:DropDownList>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator_currency" runat="server" ErrorMessage="please ente the currency of the account" ControlToValidate="DDL_currency" InitialValue=""></asp:RequiredFieldValidator>
         </td>
         <td>&nbsp;</td>
     </tr>

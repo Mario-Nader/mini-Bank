@@ -11,6 +11,14 @@ namespace NBE.Controls
 {
     public partial class CTRL_EditAccounts : System.Web.UI.UserControl
     {
+        protected void verifyUser()
+        {
+            if (Session["role"] == null || (Convert.ToInt32(Session["role"]) != 2))
+            {
+                Session.Clear();
+                Response.Redirect("WebForm1.aspx");
+            }
+        }
         public class AccountGridRow
         {
             public int AccID { get; set; }
@@ -156,6 +164,7 @@ namespace NBE.Controls
 
         protected void gvAccountRequests_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            verifyUser();
             GridViewRow row = gvAccountRequests.Rows[e.RowIndex];
 
             int AccID = Convert.ToInt32(gvAccountRequests.DataKeys[e.RowIndex].Value);
@@ -220,6 +229,7 @@ namespace NBE.Controls
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            verifyUser();
             loadLookups();
             if (!Page.IsPostBack)
             {

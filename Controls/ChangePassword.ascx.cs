@@ -11,8 +11,17 @@ namespace NBE.Controls
 {
     public partial class ChangePassword : System.Web.UI.UserControl
     {
+        protected void verifyUser()
+        {
+            if (Session["role"] == null || (Convert.ToInt32(Session["role"]) != 3))
+            {
+                Session.Clear();
+                Response.Redirect("WebForm1.aspx");
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
+            verifyUser();
             if (!Page.IsPostBack)
             { 
                 
@@ -21,6 +30,7 @@ namespace NBE.Controls
 
         protected void btn_submitPWD_Click(object sender, EventArgs e)
         {
+            verifyUser();
             lit_err.Text = "";
             if (txt_NewPassword.Text != txt_passwordConfirmation.Text)
             {

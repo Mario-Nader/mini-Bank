@@ -25,6 +25,7 @@
           <Property Name="MakerName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CheckerName" Type="nvarchar" MaxLength="50" />
           <Property Name="CustomerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="workingID" Type="int" />
         </EntityType>
         <EntityType Name="accounts_look_up">
           <Key>
@@ -290,6 +291,7 @@
           <Property Name="CheckerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="log_accounts" Relationship="mini_bankModel.FK_log_accounts_ACCOUNTS" FromRole="ACCOUNT" ToRole="log_accounts" />
+          <Property Name="workingID" Type="Int32" />
         </EntityType>
         <EntityType Name="accounts_look_up">
           <Key>
@@ -544,6 +546,7 @@
           <EntitySetMapping Name="ACCOUNTS">
             <EntityTypeMapping TypeName="mini_bankModel.ACCOUNT">
               <MappingFragment StoreEntitySet="ACCOUNTS">
+                <ScalarProperty Name="workingID" ColumnName="workingID" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="CheckerName" ColumnName="CheckerName" />
                 <ScalarProperty Name="MakerName" ColumnName="MakerName" />

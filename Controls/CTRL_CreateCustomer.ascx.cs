@@ -14,9 +14,18 @@ namespace NBE.Controls
 {
     public partial class CreateCustomer : System.Web.UI.UserControl
     {
+        protected void verifyUser()
+        {
+            if (Session["role"] == null || (Convert.ToInt32(Session["role"]) != 2))
+            {
+                Session.Clear();
+                Response.Redirect("WebForm1.aspx");
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!Page.IsPostBack)
+            verifyUser();
+            if (!Page.IsPostBack)
             {
 
             }
@@ -40,6 +49,7 @@ namespace NBE.Controls
 
         protected void submit_button_clicked(object sender, EventArgs e)
         {
+            verifyUser();
             if (!(Convert.ToInt32(Session["role"]) == 2))
             {
                 Session.Clear();

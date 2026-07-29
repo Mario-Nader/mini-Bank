@@ -15,22 +15,22 @@ namespace NBE.Controls
     {
 
         /// <summary>
-        /// txt_CIF control.
+        /// txt_NationalID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_CIF;
+        protected global::System.Web.UI.WebControls.TextBox txt_NationalID;
 
         /// <summary>
-        /// RequiredFieldValidator2 control.
+        /// RequiredFieldValidator2_nationalID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2_nationalID;
 
         /// <summary>
         /// DDL_Branch control.
@@ -42,6 +42,15 @@ namespace NBE.Controls
         protected global::System.Web.UI.WebControls.DropDownList DDL_Branch;
 
         /// <summary>
+        /// RequiredFieldValidator_branch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator_branch;
+
+        /// <summary>
         /// DDL_Class control.
         /// </summary>
         /// <remarks>
@@ -51,6 +60,15 @@ namespace NBE.Controls
         protected global::System.Web.UI.WebControls.DropDownList DDL_Class;
 
         /// <summary>
+        /// RequiredFieldValidator_class control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator_class;
+
+        /// <summary>
         /// DDL_currency control.
         /// </summary>
         /// <remarks>
@@ -58,6 +76,15 @@ namespace NBE.Controls
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDL_currency;
+
+        /// <summary>
+        /// RequiredFieldValidator_currency control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator_currency;
 
         /// <summary>
         /// txt_Amount control.
