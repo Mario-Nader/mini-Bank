@@ -13,6 +13,35 @@ namespace NBE.Controls
 {
     public partial class CTRL_validateCustomer : System.Web.UI.UserControl
     {
+        private Boolean ConcurrencyCheck(int custID)
+        {
+            try
+            {
+                using (mini_bankEntities db = new mini_bankEntities())
+                {
+                    //ACCOUNT updateCheck = db.ACCOUNTS.Where(acc => acc.AccID == AccID).Single();
+                    CUSTOMER updateCheck = db.CUSTOMERS.Where(cust => cust.custID == custID).Single();
+                    if (updateCheck.workingID == null)
+                    {
+                        updateCheck.workingID = Convert.ToInt32(Session["ID"]);
+                        db.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        if (updateCheck.workingID != Convert.ToInt32(Session["ID"]))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return false;
+        }
         protected void verifyUser()
         {
             if (Session["role"] == null || (Convert.ToInt32(Session["role"]) != 1)){
@@ -98,6 +127,7 @@ namespace NBE.Controls
 
         protected void gvRowCommand(object sender, GridViewCommandEventArgs e)
         {
+            lit_err.Text = "";
             verifyUser();
             var connectionFromConfiguration = WebConfigurationManager.ConnectionStrings["DBconnection"].ConnectionString;
             using (SqlConnection DBconnection = new SqlConnection(connectionFromConfiguration))
@@ -113,6 +143,14 @@ namespace NBE.Controls
                     int rowIndex = Convert.ToInt32(e.CommandArgument);
                     //GridViewRow row = (GridViewRow)gv_CustomerRequests.Rows[Convert.ToInt32(e.CommandArgument)];
                     int custID = Convert.ToInt32(gv_CustomerRequests.DataKeys[rowIndex].Value);
+                    bool available = ConcurrencyCheck(custID);
+                    if(!available)
+                    {
+                        DBconnection.Close();
+                        DBconnection.Dispose();
+                        lit_err.Text = "another checker is working on this you can validate other requests";
+                        return;
+                    }
                     String checkQuery = String.Format("select status from CUSTOMERS where custID = {0}", custID);
                     SqlCommand Checkcmd = new SqlCommand(checkQuery, DBconnection);
                     SqlDataReader reader = Checkcmd.ExecuteReader();

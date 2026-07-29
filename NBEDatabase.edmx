@@ -90,6 +90,7 @@
           <Property Name="status" Type="int" Nullable="false" />
           <Property Name="nationalID" Type="nvarchar" MaxLength="14" Nullable="false" />
           <Property Name="comments" Type="nvarchar" MaxLength="250" />
+          <Property Name="workingID" Type="int" />
         </EntityType>
         <EntityType Name="log_accounts">
           <Key>
@@ -350,6 +351,7 @@
           <NavigationProperty Name="ACCOUNTS" Relationship="Self.FK_ACCOUNTS_CUSTOMERS" FromRole="CUSTOMERS" ToRole="ACCOUNTS" />
           <NavigationProperty Name="USERS" Relationship="Self.FK_USERS_CUSTOMERS" FromRole="CUSTOMERS" ToRole="USERS" />
           <NavigationProperty Name="log_customers" Relationship="mini_bankModel.FK_log_customers_CUSTOMERS" FromRole="CUSTOMER" ToRole="log_customers" />
+          <Property Name="workingID" Type="Int32" />
         </EntityType>
         <EntityType Name="Role_look_up">
           <Key>
@@ -607,6 +609,7 @@
           <EntitySetMapping Name="CUSTOMERS">
             <EntityTypeMapping TypeName="mini_bankModel.CUSTOMER">
               <MappingFragment StoreEntitySet="CUSTOMERS">
+                <ScalarProperty Name="workingID" ColumnName="workingID" />
                 <ScalarProperty Name="custID" ColumnName="custID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CIF" ColumnName="CIF" />

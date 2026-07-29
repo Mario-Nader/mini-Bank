@@ -9,6 +9,37 @@ namespace NBE.Controls
 {
     public partial class CTRL_EditCustomers : System.Web.UI.UserControl
     {
+
+        private Boolean ConcurrencyCheck(int custID)
+        {
+            try
+            {
+                using (mini_bankEntities db = new mini_bankEntities())
+                {
+                    //ACCOUNT updateCheck = db.ACCOUNTS.Where(acc => acc.AccID == AccID).Single();
+                    CUSTOMER updateCheck = db.CUSTOMERS.Where(cust => cust.custID == custID).Single();
+                    if (updateCheck.workingID == null)
+                    {
+                        updateCheck.workingID = Convert.ToInt32(Session["ID"]);
+                        db.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        if (updateCheck.workingID != Convert.ToInt32(Session["ID"]))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return false;
+        }
+
         protected void verifyUser()
         {
             if (Session["role"] == null || (Convert.ToInt32(Session["role"]) != 2))
@@ -99,6 +130,13 @@ namespace NBE.Controls
             GridViewRow row = gv_CustomerRequests.Rows[e.RowIndex];
 
             int custID = Convert.ToInt32(gv_CustomerRequests.DataKeys[e.RowIndex].Value);
+            bool available = ConcurrencyCheck(custID);
+            if (!available)
+            {
+                lit_status.Text = "another maker is working on this customer you can edit other customers";
+                BindGrid();
+                return;
+            }
             try
             {
                 using (mini_bankEntities db = new mini_bankEntities())

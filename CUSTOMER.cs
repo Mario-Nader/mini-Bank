@@ -38,6 +38,7 @@ namespace NBE
         public int status { get; set; }
         public string nationalID { get; set; }
         public string comments { get; set; }
+        public Nullable<int> workingID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ACCOUNT> ACCOUNTS { get; set; }
