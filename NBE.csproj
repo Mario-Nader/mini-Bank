@@ -290,6 +290,7 @@
     <Compile Include="EditCustomers.aspx.designer.cs">
       <DependentUpon>EditCustomers.aspx</DependentUpon>
     </Compile>
+    <Compile Include="hasher.cs" />
     <Compile Include="SingleSideTransactions_log.cs">
       <DependentUpon>NBEDatabase.tt</DependentUpon>
     </Compile>

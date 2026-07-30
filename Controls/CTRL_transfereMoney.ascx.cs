@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -54,6 +55,7 @@ namespace NBE.Controls
                     {
                         ddl_srcAccount.Items.Add(accountNumbers[i]);
                     }
+                    Response.Write("<br/>Items = " + ddl_srcAccount.Items.Count);
                     #endregion
                 }
             }
@@ -61,6 +63,7 @@ namespace NBE.Controls
 
         protected void ddl_srcAccount_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             verifyUser();
             #region filling the data of the new selected index
             using (mini_bankEntities db = new mini_bankEntities()) {
@@ -201,36 +204,44 @@ namespace NBE.Controls
         protected void check_distAcc_Click(object sender, EventArgs e)
         {
             verifyUser();
-            using (mini_bankEntities db = new mini_bankEntities()) {
-
-                #region getting the distnation account
-                string distAccountNumber = txt_DistAccount.Text;
-                if(distAccountNumber.Length == 0)
+            try
+            {
+                using (mini_bankEntities db = new mini_bankEntities())
                 {
-                    lit_state.Text = "please enter a distenation account";
-                    return;
-                }
-                ACCOUNT distAccount = (from acc in db.ACCOUNTS
-                                      where acc.AccountNumber == distAccountNumber
-                                      select acc).Single() ;
-                #endregion
 
-                if (distAccount == null) {
-                    lit_state.Text = "there is no account of that number";
-                }
-                else
-                {
-                    lit_state.Text = "";
-                    #region getting the data and filling the textboxes
-                    int custid =Convert.ToInt32(distAccount.customerID);
-                    string ownerName = db.CUSTOMERS
-                                        .Where(c => c.custID == custid)
-                                        .Select(c => c.Name)
-                                        .Single();
-                    txt_distCurr.Text = CurrencyLookup[Convert.ToInt32(distAccount.currency)].currencyCode;
-                    txt_ownerName.Text = ownerName;
+                    #region getting the distnation account
+                    string distAccountNumber = txt_DistAccount.Text;
+                    if (distAccountNumber.Length == 0)
+                    {
+                        lit_state.Text = "please enter a distenation account";
+                        return;
+                    }
+                    ACCOUNT distAccount = (from acc in db.ACCOUNTS
+                                           where acc.AccountNumber == distAccountNumber
+                                           select acc).Single();
                     #endregion
+
+                    if (distAccount == null)
+                    {
+                        lit_state.Text = "there is no account of that number";
+                    }
+                    else
+                    {
+                        lit_state.Text = "";
+                        #region getting the data and filling the textboxes
+                        int custid = Convert.ToInt32(distAccount.customerID);
+                        string ownerName = db.CUSTOMERS
+                                            .Where(c => c.custID == custid)
+                                            .Select(c => c.Name)
+                                            .Single();
+                        txt_distCurr.Text = CurrencyLookup[Convert.ToInt32(distAccount.currency)].currencyCode;
+                        txt_ownerName.Text = ownerName;
+                        #endregion
+                    }
                 }
+            }catch(Exception exp)
+            {
+                lit_state.Text = exp.Message;
             }
         }
     }

@@ -46,7 +46,7 @@ namespace NBE.Controls
                     int ID = Convert.ToInt32(Session["id"]);
                     String Password = txt_NewPassword.Text;
                     SqlCommand cmd = new SqlCommand(UpdateQuery, DBconnection);
-                    cmd.Parameters.AddWithValue("@password",Password);
+                    cmd.Parameters.AddWithValue("@password",hasher.getHash(Password));
                     cmd.Parameters.AddWithValue("@id",ID);
                     int rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected > 0)

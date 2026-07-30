@@ -15,7 +15,7 @@
     </tr>
     <tr>
         <td class="auto-style2">Source Account Number&nbsp;
-            <asp:DropDownList AutoPostBack="true" ID="ddl_srcAccount" runat="server" OnSelectedIndexChanged="ddl_srcAccount_SelectedIndexChanged" style="height: 25px">
+            <asp:DropDownList AutoPostBack="true" ID="ddl_srcAccount" runat="server" OnSelectedIndexChanged="ddl_srcAccount_SelectedIndexChanged">
             </asp:DropDownList>
             <asp:RequiredFieldValidator ID="rfv_srcAccNumber" InitialValue="" runat="server" ControlToValidate="ddl_srcAccount" ErrorMessage="please select an account"></asp:RequiredFieldValidator>
         </td>

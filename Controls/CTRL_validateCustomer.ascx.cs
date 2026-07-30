@@ -209,7 +209,7 @@ namespace NBE.Controls
                                 String insertQuery = "insert into USERS (Name,password,CustomerID,Role,active) values(@name,@password,@custID,@role,@active)";
                             SqlCommand insertcmd = new SqlCommand(insertQuery, DBconnection);
                             insertcmd.Parameters.AddWithValue("@name", Name);
-                            insertcmd.Parameters.AddWithValue("@password", Password);
+                            insertcmd.Parameters.AddWithValue("@password", hasher.getHash(Password));
                             insertcmd.Parameters.AddWithValue("@custID", custID);
                             insertcmd.Parameters.AddWithValue("@role", role);
                             insertcmd.Parameters.AddWithValue("@active", active);

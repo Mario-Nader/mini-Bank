@@ -52,7 +52,7 @@ namespace NBE
                     String loginQuery = "select Name, Role,ID ,active from USERS where name = @username and password = @password";
                     SqlCommand loginCommand = new SqlCommand(loginQuery, DBconnection);
                     loginCommand.Parameters.AddWithValue("@username", txt_username.Text);//use CIF instead of the username
-                    loginCommand.Parameters.AddWithValue("@password",txt_pwd.Text);
+                    loginCommand.Parameters.AddWithValue("@password",hasher.getHash(txt_pwd.Text));
                     //DBliteral.Text = connectionFromConfiguration.ToString();
                     SqlDataReader reader = loginCommand.ExecuteReader();
                 int role = 0;
