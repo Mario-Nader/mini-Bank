@@ -33,6 +33,10 @@ namespace NBE.Controls
                         {
                             return false;
                         }
+                        else
+                        {
+                            return true;
+                        }
                     }
                 }
             }
@@ -51,6 +55,7 @@ namespace NBE.Controls
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            lit_err.Text = "";
             if (!Page.IsPostBack)
             {
                 BindDataToGridView();
@@ -161,7 +166,10 @@ namespace NBE.Controls
                         }
                         else
                         {
-                            StillEditable = false; 
+                            StillEditable = false;
+                            lit_err.Text = "another checker handled this";
+                            BindDataToGridView();
+                            return;
                         }
                     }
                     reader.Close();
@@ -182,7 +190,7 @@ namespace NBE.Controls
                             }
                             int checkerID = Convert.ToInt32(Session["ID"]);
                             string checkerName = Session["uname"].ToString();
-                            String query = String.Format("update CUSTOMERS set status = 2 ,checkerID = {1}, checkerName = '{2}' where custID = {0}", custID,checkerID, checkerName);
+                            String query = String.Format("update CUSTOMERS set status = 2 ,checkerID = {1}, checkerName = '{2}', workingID = NULL where custID = {0}", custID,checkerID, checkerName);
                             SqlCommand cmd = new SqlCommand(query, DBconnection);
                             cmd.ExecuteNonQuery();
                             String getCustQuery = String.Format("select * from CUSTOMERS where custID = {0}", custID);
@@ -218,7 +226,7 @@ namespace NBE.Controls
                                 db.log_customers.Add(log);
                                 db.SaveChanges();
                             }
-                            String query = String.Format("update CUSTOMERS set status = 3 , checkerID = {0}, checkerName = '{1}' where CustID = {2}", Convert.ToInt32(Session["ID"]), Session["uname"].ToString(), custID);
+                            String query = String.Format("update CUSTOMERS set status = 3 , checkerID = {0}, checkerName = '{1}', workingID = NULL where CustID = {2}", Convert.ToInt32(Session["ID"]), Session["uname"].ToString(), custID);
                             SqlCommand cmd = new SqlCommand(query, DBconnection);
                             cmd.ExecuteNonQuery();
                         }
@@ -239,7 +247,7 @@ namespace NBE.Controls
                             if (TXTcomment != null) { 
                              comment = TXTcomment.Text;
                             }
-                            String query = String.Format("update CUSTOMERS set status = 4 ,checkerID = {0}, checkerName = '{1}' , comments = '{2}' where custID = {3}", Convert.ToInt32(Session["ID"]), Session["uname"].ToString(), comment,custID);
+                            String query = String.Format("update CUSTOMERS set status = 4 ,checkerID = {0}, checkerName = '{1}' , comments = '{2}' ,workingID = NULL where custID = {3}", Convert.ToInt32(Session["ID"]), Session["uname"].ToString(), comment,custID);
                             SqlCommand cmd = new SqlCommand(query, DBconnection);
                             cmd.ExecuteNonQuery();
                         }
@@ -248,6 +256,7 @@ namespace NBE.Controls
                     else
                     {
                         lit_err.Text = "it was handled by another checker";
+
                     }
                     
                         BindDataToGridView();

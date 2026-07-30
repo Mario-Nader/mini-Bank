@@ -30,6 +30,10 @@ namespace NBE.Controls
                         {
                             return false;
                         }
+                        else
+                        {
+                            return true;
+                        }
                     }
                 }
             }
@@ -113,6 +117,7 @@ namespace NBE.Controls
         protected void gvCustomerRequests_RowEditing(object sender, GridViewEditEventArgs e)
         {
             // Set the active row to edit mode using the row index
+            lit_status.Text = "";
             gv_CustomerRequests.EditIndex = e.NewEditIndex;
             BindGrid(); // Rebind data to refresh the UI into edit mode
         }
@@ -120,39 +125,70 @@ namespace NBE.Controls
         protected void gvCustomerRequests_RowCancelineEdit(object sender, GridViewCancelEditEventArgs e)
         {
             // Reset the edit index back to default (-1 means no row is being edited)
+            lit_status.Text = "";
             gv_CustomerRequests.EditIndex = -1;
             BindGrid();
         }
 
         protected void gvCustomerRequests_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            lit_status.Text = "";
             verifyUser();
             GridViewRow row = gv_CustomerRequests.Rows[e.RowIndex];
 
-            int custID = Convert.ToInt32(gv_CustomerRequests.DataKeys[e.RowIndex].Value);
+            TextBox txt_name = (TextBox)row.FindControl("txt_name");
+            TextBox txt_nationalID = (TextBox)row.FindControl("txt_nationalID");
+            TextBox txt_address = (TextBox)row.FindControl("txt_address");
+            TextBox txt_age = (TextBox)row.FindControl("txt_age");
+            TextBox txt_comment = (TextBox)row.FindControl("txt_comment");
+            string name = txt_name.Text;
+            string nationalID = txt_nationalID.Text;
+            string address = txt_address.Text;
+            int age = Convert.ToInt32(txt_age.Text);
+            if(name.Length == 0)
+            {
+                lit_status.Text = "please enter name";
+                return;
+            }if (txt_nationalID.Text.Length != 14) {
+                lit_status.Text = "please ente a proper nationalID";
+                return;
+            }
+            if(address.Length == 0)
+            {
+                lit_status.Text = "please enter the address";
+                return;
+            }if(age < 15)
+            {
+                lit_status.Text = "please enter the correct age";
+                return;
+            }
+
+
+                int custID = Convert.ToInt32(gv_CustomerRequests.DataKeys[e.RowIndex].Value);
             bool available = ConcurrencyCheck(custID);
             if (!available)
             {
-                lit_status.Text = "another maker is working on this customer you can edit other customers";
                 BindGrid();
+                lit_status.Text = "another maker is working on this customer you so your change was not submitted";
                 return;
             }
             try
             {
                 using (mini_bankEntities db = new mini_bankEntities())
                 {
-                    CUSTOMER update = new CUSTOMER();
-                    update.custID = custID;
-                    db.CUSTOMERS.Attach(update);
-                    TextBox txt_name = (TextBox)row.FindControl("txt_name");
-                    TextBox txt_nationalID = (TextBox)row.FindControl("txt_nationalID");
-                    TextBox txt_address = (TextBox)row.FindControl("txt_address");
-                    TextBox txt_age = (TextBox)row.FindControl("txt_age");
-                    TextBox txt_comment = (TextBox)row.FindControl("txt_comment");
-                    string name = txt_name.Text;
-                    string nationalID = txt_nationalID.Text;
-                    string address = txt_address.Text;
-                    int age = Convert.ToInt32(txt_age.Text);
+                    //CUSTOMER update = new CUSTOMER();
+                    //update.custID = custID;
+                    CUSTOMER update = db.CUSTOMERS.Where(cust => cust.custID == custID).Select(cust => cust).Single();
+                    //db.CUSTOMERS.Attach(update);
+                    //TextBox txt_name = (TextBox)row.FindControl("txt_name");
+                    //TextBox txt_nationalID = (TextBox)row.FindControl("txt_nationalID");
+                    //TextBox txt_address = (TextBox)row.FindControl("txt_address");
+                    //TextBox txt_age = (TextBox)row.FindControl("txt_age");
+                    //TextBox txt_comment = (TextBox)row.FindControl("txt_comment");
+                    //string name = txt_name.Text;
+                    //string nationalID = txt_nationalID.Text;
+                    //string address = txt_address.Text;
+                    //int age = Convert.ToInt32(txt_age.Text);
                     update.Name = name;
                     update.nationalID = nationalID;
                     update.address = address;
@@ -167,6 +203,7 @@ namespace NBE.Controls
                     log.MakerName = Session["uname"].ToString();
                     log.status = 5;
                     db.log_customers.Add(log);
+                    update.workingID = null;
                     //update.comments = txt
                     db.SaveChanges();
                 }

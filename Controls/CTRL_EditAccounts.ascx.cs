@@ -180,6 +180,10 @@ namespace NBE.Controls
                         {
                             return false;
                         }
+                        else
+                        {
+                            return true;
+                        }
                     }
                 }
             }
@@ -193,8 +197,35 @@ namespace NBE.Controls
         {
             verifyUser();
             GridViewRow row = gvAccountRequests.Rows[e.RowIndex];
-
-            int AccID = Convert.ToInt32(gvAccountRequests.DataKeys[e.RowIndex].Value);
+            TextBox txt_custName = (TextBox)row.FindControl("txt_name");
+            DropDownList ddl_curr = (DropDownList)row.FindControl("ddl_currency");
+            TextBox txt_amount = (TextBox)row.FindControl("txt_amount");
+            //TextBox txt_branch = (TextBox)row.FindControl("txt_branch");
+            //TextBox txt_class = (TextBox)row.FindControl("txt_class");
+            TextBox txt_comment = (TextBox)row.FindControl("txt_commentEdited");
+            DropDownList ddl_branch = (DropDownList)row.FindControl("ddl_branch");
+            DropDownList ddl_class = (DropDownList)row.FindControl("ddl_class");
+            if(txt_custName.Text.Length == 0)
+            {
+                lit_err.Text = "please enter a name for the customer";
+                return;
+            }if(ddl_curr.SelectedValue == "")
+            {
+                lit_err.Text = "please enter the account currency";
+                return;
+            }if (txt_amount.Text.Length == 0) {
+                lit_err.Text = "please enter the amount";
+                return;
+            }if(ddl_branch.SelectedValue == "")
+            {
+                lit_err.Text = "please enter the branch";
+                return;
+            }if(ddl_class.SelectedValue == "")
+            {
+                lit_err.Text = "please enter a class for the account";
+                return;
+            }
+                int AccID = Convert.ToInt32(gvAccountRequests.DataKeys[e.RowIndex].Value);
             try
             {
                 using (mini_bankEntities db = new mini_bankEntities())
@@ -220,14 +251,14 @@ namespace NBE.Controls
                     if (available)
                     {
                         ACCOUNT update = db.ACCOUNTS.Where(acc => acc.AccID == AccID).Single();
-                        TextBox txt_custName = (TextBox)row.FindControl("txt_name");
-                        DropDownList ddl_curr = (DropDownList)row.FindControl("ddl_currency");
-                        TextBox txt_amount = (TextBox)row.FindControl("txt_amount");
-                        //TextBox txt_branch = (TextBox)row.FindControl("txt_branch");
-                        //TextBox txt_class = (TextBox)row.FindControl("txt_class");
-                        TextBox txt_comment = (TextBox)row.FindControl("txt_commentEdited");
-                        DropDownList ddl_branch = (DropDownList)row.FindControl("ddl_branch");
-                        DropDownList ddl_class = (DropDownList)row.FindControl("ddl_class");
+                        //TextBox txt_custName = (TextBox)row.FindControl("txt_name");
+                        //DropDownList ddl_curr = (DropDownList)row.FindControl("ddl_currency");
+                        //TextBox txt_amount = (TextBox)row.FindControl("txt_amount");
+                        ////TextBox txt_branch = (TextBox)row.FindControl("txt_branch");
+                        ////TextBox txt_class = (TextBox)row.FindControl("txt_class");
+                        //TextBox txt_comment = (TextBox)row.FindControl("txt_commentEdited");
+                        //DropDownList ddl_branch = (DropDownList)row.FindControl("ddl_branch");
+                        //DropDownList ddl_class = (DropDownList)row.FindControl("ddl_class");
                         update.CustomerName = txt_custName.Text;
                         update.currency = Convert.ToInt32(ddl_curr.SelectedValue);
                         update.amount = Convert.ToInt32(txt_amount.Text);
@@ -240,6 +271,7 @@ namespace NBE.Controls
                         update.status = 5;
                         update.MakerName = Session["uname"].ToString();
                         update.MakerID = Convert.ToInt32(Session["ID"]);
+                        update.workingID = null;
                         log_accounts log = new log_accounts();
                         log.AccID = update.AccID;
                         log.custID = Convert.ToInt32(update.customerID);

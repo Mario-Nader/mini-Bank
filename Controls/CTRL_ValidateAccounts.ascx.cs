@@ -41,6 +41,10 @@ namespace NBE.Controls
                         {
                             return false;
                         }
+                        else
+                        {
+                            return true;
+                        }
                     }
                 }
             }
@@ -48,7 +52,6 @@ namespace NBE.Controls
             {
                 return false;
             }
-            return false;
         }
 
         protected void verifyUser()
@@ -140,9 +143,13 @@ namespace NBE.Controls
                     if (!editable)
                     {
                         lit_status.Text = "another checker already handled this request";
+                        DataBind();
+                        return;
                     }else if (!available)
                     {
                         lit_status.Text= "another checker is handling this request";
+                        DataBind();
+                        return;
                     }
                     else
                     {
@@ -187,6 +194,7 @@ namespace NBE.Controls
                         update.CheckerName = Session["uname"].ToString();
                         update.CheckerID = Convert.ToInt32(Session["ID"]);
                         db.log_accounts.Add(log);
+                        update.workingID = null;
                         db.SaveChanges();
                     }
                         bindData();

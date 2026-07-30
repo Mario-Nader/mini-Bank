@@ -205,6 +205,11 @@ namespace NBE.Controls
 
                 #region getting the distnation account
                 string distAccountNumber = txt_DistAccount.Text;
+                if(distAccountNumber.Length == 0)
+                {
+                    lit_state.Text = "please enter a distenation account";
+                    return;
+                }
                 ACCOUNT distAccount = (from acc in db.ACCOUNTS
                                       where acc.AccountNumber == distAccountNumber
                                       select acc).Single() ;

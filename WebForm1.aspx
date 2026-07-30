@@ -7,6 +7,13 @@
     <title></title>
     <link href ="bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src ="bootstrap-5.3.8-dist/js/bootsrap.bundle.min.js"></script>
+        <script type ="text/javascript">
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        });
+        </script>
     <style type="text/css">
         html,
 body{
